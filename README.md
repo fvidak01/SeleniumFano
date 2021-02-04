@@ -34,7 +34,7 @@ To run tests:
 		to explicitely run ore suites at same time, substitute 'N' with number of worker threads, npm and jest have default at 3
 		jest --maxWorkers=N "nameOfTestsOrSuites"
 		
-		to run sequentially (running multiple Safari tests requires it to work), 
+		to run sequentially (running multiple Safari tests requires it to work)
 		jest --runInBand "nameOfTestsOrSuites"
 		npm t --runInBand "nameOfTestsOrSuites)
 	
