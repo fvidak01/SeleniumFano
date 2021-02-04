@@ -1,0 +1,33 @@
+import { WebDriver, WebElement } from "selenium-webdriver";
+import { buildDriver, closeGDPR } from "../../easifier";
+
+// Starting URL
+const rootURL:string = ""; //Required
+// in ms
+const ttl:number = 15000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 45;
+
+// Available WebDrivers
+const browserDriver:string = "safari";
+// const browserList:string[] = ["chrome"];
+
+let driver:WebDriver;
+
+//
+// Testing if
+//
+
+it("waits for "+browserDriver+" to start", async ()=>{
+    driver = await buildDriver(browserDriver);
+});
+
+describe((browserDriver+" tests").toUpperCase(), ()=>{
+    it("sets up the testing area", async ()=>{
+        await driver.get(rootURL);
+        await closeGDPR(driver, ttl);
+    });
+});
+
+it("stops "+browserDriver, ()=>{
+    driver.quit();
+});

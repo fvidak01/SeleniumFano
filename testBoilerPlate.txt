@@ -1,0 +1,38 @@
+import { WebDriver, WebElement } from "selenium-webdriver";
+import { buildDriver, buildEdgeDriver, closeGDPR } from "../../easifier";
+
+// Starting URL
+const rootURL:string = ""; //Required
+// in ms
+const ttl:number = 15000;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
+
+// Available WebDrivers
+const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
+// const browserList:string[] = ["chrome"];
+
+let driver:WebDriver;
+
+//
+// Testing if
+//
+
+browserList.forEach(browserDriver =>{
+    it("waits for "+browserDriver+" to start", async ()=>{
+        if(browserDriver!="MicrosoftEdge")
+        driver = await buildDriver(browserDriver);
+    else
+        driver = await buildEdgeDriver();
+    });
+
+    describe((browserDriver+" tests").toUpperCase(), ()=>{
+        it("sets up the testing area", async ()=>{
+            await driver.get(rootURL);
+            await closeGDPR(driver, ttl);
+        });
+    });
+    
+    it("stops "+browserDriver, ()=>{
+        driver.quit();
+    });
+});
