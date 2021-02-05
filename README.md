@@ -31,11 +31,10 @@ To run tests:
 	
 	jest	"nameOfTest(s)(suites)"
 		
-		to explicitely run ore suites at same time, substitute 'N' with number of worker threads, npm and jest have default at 3
+		to explicitely run more suites at same time, substitute 'N' with number of worker threads, npm default is 3, jest has some logic behind the number
 		jest --maxWorkers=N "nameOfTestsOrSuites"
 		
-		to run sequentially (running multiple Safari tests requires it to work)
-		jest --runInBand "nameOfTestsOrSuites"
-		npm t --runInBand "nameOfTestsOrSuites)
+		to run sequentially (required for running multiple Safari tests or suites)
+		jest --maxWorkers=1 "nameOfTestsOrSuites"
 	
 	npm t nameOfTest(s)(suites)
