@@ -67,34 +67,42 @@ browserList.forEach(browserDriver =>{
 
             it("checks if incorrectly filled out form shows 'Required fields empty' errors", async ()=>{
                 // Skriv inn ditt telefonnummer
+                await formInputs[0].click();
                 await formInputs[0].sendKeys("qwe");
                 // Fornavn
+                await formInputs[1].click();
                 await formInputs[1].sendKeys("asd"); 
                 // Etternavn
+                await formInputs[2].click();
                 await formInputs[2].sendKeys("yxc");
                 // E-post
+                await formInputs[3].click();
                 await formInputs[3].sendKeys("qwe", Key.TAB);
                 await nextButton.click();
                 let errorMssgs:WebElement[] = await mainSection.findElements(By.className("c-registration__row__msg--error "));
                 expect(errorMssgs.length).toBe(2);
             });
-
+    
             it("checks if correctly filled out form doesn't show 'Required fields empty' errors", async ()=>{
                 formInputs.forEach(async inputEl=>{
                     await inputEl.clear();
                 });
                 // Skriv inn ditt telefonnummer
+                await formInputs[0].click();
                 await formInputs[0].sendKeys("12345678", Key.TAB);
                 // Fornavn
+                await formInputs[1].click();
                 await formInputs[1].sendKeys("asd", Key.TAB);
                 // Etternavn
+                await formInputs[2].click();
                 await formInputs[2].sendKeys("yxc", Key.TAB);
                 // E-post
+                await formInputs[3].click();
                 await formInputs[3].sendKeys("q@a.at", Key.TAB);
                 // Neste
                 await nextButton.click();
                 // .then(async ()=>await safariDelay(browserDriver, 750));
-
+    
                 await driver.wait(until.urlContains("connectid.no"), ttl)
                     .then(
                         async ()=>{
@@ -102,12 +110,12 @@ browserList.forEach(browserDriver =>{
                             expect(errorMssgs).toBeNull();
                         },
                         async ()=>{
-                            console.log(browserDriver+" took too long to connect to mediaconnect.id but if this test passed, issue is webdriver and sendKeys(). If it's safari, remember, safari is 'special'");
+                            console.log(browserDriver+" took too long to connect to mediaconnect.id but if this test passed, it means it's webdriver issue with sendKeys(). If it's safari, remember, safari is 'special'");
                             let errorMssgs:WebElement[] = await mainSection.findElements(By.className("c-registration__row__msg--error ")).catch(()=>null);
                             expect(errorMssgs.length).toBeGreaterThanOrEqual(0);
                         }
                     ); 
-            });   
+            });      
         });
     });
     it("stops "+browserDriver, ()=>{

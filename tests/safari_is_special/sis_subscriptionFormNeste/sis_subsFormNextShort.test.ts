@@ -62,12 +62,16 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
 
         it("checks if incorrectly filled out form shows 'Required fields empty' errors", async ()=>{
             // Skriv inn ditt telefonnummer
+            await formInputs[0].click();
             await formInputs[0].sendKeys("qwe");
             // Fornavn
+            await formInputs[1].click();
             await formInputs[1].sendKeys("asd"); 
             // Etternavn
+            await formInputs[2].click();
             await formInputs[2].sendKeys("yxc");
             // E-post
+            await formInputs[3].click();
             await formInputs[3].sendKeys("qwe", Key.TAB);
             await nextButton.click();
             let errorMssgs:WebElement[] = await mainSection.findElements(By.className("c-registration__row__msg--error "));
@@ -79,12 +83,16 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
                 await inputEl.clear();
             });
             // Skriv inn ditt telefonnummer
+            await formInputs[0].click();
             await formInputs[0].sendKeys("12345678", Key.TAB);
             // Fornavn
+            await formInputs[1].click();
             await formInputs[1].sendKeys("asd", Key.TAB);
             // Etternavn
+            await formInputs[2].click();
             await formInputs[2].sendKeys("yxc", Key.TAB);
             // E-post
+            await formInputs[3].click();
             await formInputs[3].sendKeys("q@a.at", Key.TAB);
             // Neste
             await nextButton.click().then(async ()=>await safariDelay(browserDriver, 750));
