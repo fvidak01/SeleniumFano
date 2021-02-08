@@ -115,7 +115,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             await formInputs[10].click();
             await formInputs[10].sendKeys("asd", Key.TAB);
             // Neste
-            await nextButton.click().then(async ()=>await safariDelay(browserDriver, 750));
+            await nextButton.click().then(async ()=>await safariDelay(browserDriver, 1000));
 
             await driver.wait(until.urlContains("connectid.no"), ttl)
                     .then(

@@ -1,5 +1,5 @@
-import { WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, closeGDPR } from "../../easifier";
+import { WebDriver } from "selenium-webdriver";
+import { buildDriver, closeGDPR } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = ""; //Required
@@ -7,15 +7,15 @@ const rootURL:string = ""; //Required
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 45;
 
-// Available WebDrivers
-const browserDriver:string = "safari";
-// const browserList:string[] = ["chrome"];
-
 let driver:WebDriver;
 
 //
 // Testing if
 //
+
+// Available WebDrivers
+const browserDriver:string = "safari";
+
 
 it("waits for "+browserDriver+" to start", async ()=>{
     driver = await buildDriver(browserDriver);

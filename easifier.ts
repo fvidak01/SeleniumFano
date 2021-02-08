@@ -28,8 +28,11 @@ export function buildEdgeDriver(){
 }
 
 export async function closeGDPR(driver:WebDriver, ttl:number){
-    let gdprCloser:WebElement = await getElByID(driver, ttl, "finansavisen-gdpr-disclamer-close").catch(()=> null);
-    await gdprCloser.click();
+    await (await getElByID(driver, ttl, "finansavisen-gdpr-disclamer-close")).click()
+        .catch(()=>{
+            console.log("Failed to close GDPR notice.");
+            return null;
+        });
 };
 
 export function delay(ms:number) {

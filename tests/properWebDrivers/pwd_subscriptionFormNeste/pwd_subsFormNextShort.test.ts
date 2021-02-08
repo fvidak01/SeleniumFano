@@ -110,7 +110,7 @@ browserList.forEach(browserDriver =>{
                             expect(errorMssgs).toBeNull();
                         },
                         async ()=>{
-                            console.log(browserDriver+" took too long to connect to mediaconnect.id but if this test passed, it means it's webdriver issue with sendKeys(). If it's safari, remember, safari is 'special'");
+                            console.log(browserDriver+" took too long to connect to mediaconnect.id but if this test passed, it means it's webdriver issue with sendKeys().");
                             let errorMssgs:WebElement[] = await mainSection.findElements(By.className("c-registration__row__msg--error ")).catch(()=>null);
                             expect(errorMssgs.length).toBeGreaterThanOrEqual(0);
                         }
