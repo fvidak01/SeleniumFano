@@ -1,4 +1,4 @@
-Things you need before running this:
+Things you need before running this (reminder for myself as well):
 
 	have node/npm installed
 	
