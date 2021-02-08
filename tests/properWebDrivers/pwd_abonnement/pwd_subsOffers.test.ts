@@ -23,6 +23,8 @@ browserList.forEach(browserDriver =>{
             driver = await buildDriver(browserDriver);
         else
             driver = await buildEdgeDriver();
+        // In Testing
+        driver.manage().window().maximize();
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
