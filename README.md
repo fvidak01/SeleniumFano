@@ -2,7 +2,7 @@ Things you need before running this:
 
 	have node/npm installed
 	
-  have browser webdrivers in $PATH
+  have browser webdrivers in $PATH (and have those browsers installed, Edge webdriver version has to be the same as Edge version installed)
 	
     Chrome:   https://sites.google.com/a/chromium.org/chromedriver/downloads
 		
