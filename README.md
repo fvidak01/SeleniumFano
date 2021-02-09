@@ -12,18 +12,17 @@ Things you need before running this (reminder for myself as well):
 		
     Edge:     https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 		
-  have selenium-webdriver installed / in $PATH
+  have selenium-webdriver installed in $PATH on Linux/MacOS
 	
     npm install selenium-webdriver
    
-If needed, from main directory path:
+If needed, from main directory path after cloning the repo:
 
 	npm install
 	
-	npx jest --init
+	npm install jest (maybe add -g if jest commands complaing that it doesn't exist, I'm a noob at this)
 	
-    when asked if use Typescript -> NO
-    add-> preset: "ts-jest", <-to module.exports in jest.config.js
+	npm install selenium-webdriver (for Windows only)
 
 To run tests:
 
