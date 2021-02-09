@@ -60,7 +60,6 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
         let el = await footer.findElement(By.partialLinkText("Min side"));
         await delay(500);
         await el.click();
-        
 
         let temp = await getElByXPath(driver, ttl, "/html/body/div/header/div[2]/nav/div/div/div[2]/a")
         await temp.click()
