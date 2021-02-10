@@ -60,19 +60,17 @@ browserList.forEach(browserDriver =>{
         });
 
         it("logs out and returns to the frontpage", async ()=>{
-            let header:WebElement = await getElByID(driver, ttl, "js-expand-menu");
-            if(browserDriver==="firefox")    
-                delay(1000);
-            await (await header.findElement(By.partialLinkText("Min side"))).click()
-            .then(async ()=>{
+            await driver.get("https://finansavisen.no/minside");
+            // let minside = await getElByXPath(driver, ttl, "//div[@id='js-expand-menu']/div/div/a");
+            // await minside.click()
+            // .then(async ()=>{
                 await (await getElByPartialLinkText(driver, ttl, "Logg ut")).click();
                 let el:WebElement = await getElByXPath(driver, ttl, "//div[@id='js-expand-menu']/div/div/a");
                 expect(await el.getAttribute("textContent")).toMatch("Kjøp");
-            })
-            .catch(e=>{
-                // console.log(e);
-                expect(false).toBeTruthy();
-            });
+            // })
+            // .catch(()=>{
+            //     expect(false).toBeTruthy();
+            // });
         });
     });
     

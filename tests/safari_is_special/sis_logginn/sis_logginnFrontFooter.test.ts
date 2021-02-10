@@ -21,7 +21,7 @@ it("waits for "+browserDriver+" to start", async ()=>{
 describe((browserDriver+" tests").toUpperCase(), ()=>{
     it("sets up the testing area", async ()=>{
         await driver.get(rootURL);
-        expect(await closeGDPR(driver, ttl)). toBeNull();
+        expect(await closeGDPR(driver, ttl)).toBeNull();
     });
 
     it("finds 'Logg inn' in footer and logs in", async ()=>{

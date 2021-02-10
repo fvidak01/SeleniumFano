@@ -1,5 +1,13 @@
-import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByClass, getElByID, getElByPartialLinkText, getElByXPath } from "../../../easifier";
+import { Key, until, WebDriver, WebElement } from "selenium-webdriver";
+import { 
+    buildDriver, 
+    buildEdgeDriver, 
+    closeGDPR,
+    getElByClass, 
+    getElByID, 
+    getElByPartialLinkText, 
+    getElByXPath 
+} from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://fa.no/7622333/";

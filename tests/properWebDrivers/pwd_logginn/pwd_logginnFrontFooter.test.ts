@@ -62,8 +62,9 @@ browserList.forEach(browserDriver =>{
         });
 
         it("logs out and returns to the frontpage", async ()=>{
-            let footer:WebElement = await getElByCss(driver, ttl, "footer");
-            await (await footer.findElement(By.partialLinkText("Min side"))).click();
+            await driver.get("https://finansavisen.no/minside");
+            // let footer:WebElement = await getElByCss(driver, ttl, "footer");
+            // await (await footer.findElement(By.partialLinkText("Min side"))).click();
 
             await (await getElByPartialLinkText(driver, ttl, "Logg ut")).click();
 

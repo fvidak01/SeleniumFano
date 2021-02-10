@@ -28,7 +28,7 @@ export function buildEdgeDriver(){
 }
 
 export async function closeGDPR(driver:WebDriver, ttl:number){
-    await (await getElByID(driver, ttl, "finansavisen-gdpr-disclamer-close")).click()
+    await (await getElByID(driver, 5000, "finansavisen-gdpr-disclamer-close")).click()
         .catch(()=>{
             console.log("Failed to close GDPR notice.");
             return null;
