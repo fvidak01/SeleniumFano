@@ -74,7 +74,6 @@ browserList.forEach(browserDriver =>{
                 // Gate
                 await formInputs[5].sendKeys("asd", Key.TAB);
                 // E-post
-                await formInputs[4].click();
                 await formInputs[4].sendKeys("qwe", Key.TAB);
                 // Etternavn
                 await formInputs[2].sendKeys("yxc", Key.TAB);
@@ -103,7 +102,6 @@ browserList.forEach(browserDriver =>{
                 // Gate
                 await formInputs[5].sendKeys("qwe", Key.TAB);
                 // E-post
-                await formInputs[4].click();
                 await formInputs[4].sendKeys("q@a.at", Key.TAB);
                 // Etternavn
                 await formInputs[2].sendKeys("yxc", Key.TAB);
