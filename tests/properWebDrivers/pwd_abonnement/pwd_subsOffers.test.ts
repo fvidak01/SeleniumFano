@@ -34,7 +34,7 @@ browserList.forEach(browserDriver =>{
         });
 
         it("closes the GDRP notice", async ()=>{
-            await closeGDPR(driver, ttl);
+            expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
         it("checks if links for fano apps are found and if fano is selected when it clicks on 'Bestill na'", async ()=>{
@@ -101,7 +101,7 @@ browserList.forEach(browserDriver =>{
         });
     });
 
-    it("stops "+browserDriver, ()=>{
-        driver.quit();
+    it("stops "+browserDriver, async ()=>{
+        await driver.quit();
     });
 });

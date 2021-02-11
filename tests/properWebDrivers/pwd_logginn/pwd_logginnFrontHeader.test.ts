@@ -32,7 +32,7 @@ browserList.forEach(browserDriver =>{
 
         it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
-            await closeGDPR(driver, ttl);
+            expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
         it("logs in and returns to the frontpage", async ()=>{
@@ -76,7 +76,7 @@ browserList.forEach(browserDriver =>{
         });
     });
     
-    it("stops "+browserDriver, ()=>{
-        driver.quit();
+    it("stops "+browserDriver, async ()=>{
+        await driver.quit();
     });
 });

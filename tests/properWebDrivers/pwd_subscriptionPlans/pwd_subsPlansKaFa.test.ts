@@ -32,7 +32,7 @@ browserList.forEach(browserDriver =>{
     
         it("sets up testing area", async ()=>{
             await driver.get(rootURL);
-            await closeGDPR(driver, ttl);
+            expect(await closeGDPR(driver, ttl)).toBeNull();
             mainSection = await getElByID(driver, ttl, "subscription-form");
             // if main section is found
             expect(mainSection).toBeDefined();
@@ -103,7 +103,7 @@ browserList.forEach(browserDriver =>{
         });
     });
     
-    it("stops "+browserDriver, ()=>{
-        driver.quit();
+    it("stops "+browserDriver, async ()=>{
+        await driver.quit();
     });
 });

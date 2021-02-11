@@ -28,7 +28,7 @@ export function buildEdgeDriver(){
 }
 
 export async function closeGDPR(driver:WebDriver, ttl:number){
-    await (await getElByID(driver, 5000, "finansavisen-gdpr-disclamer-close")).click()
+    await (await getElByID(driver, ttl, "finansavisen-gdpr-disclamer-close")).click()
         .catch(()=>{
             console.log("Failed to close GDPR notice.");
             return null;
@@ -40,12 +40,6 @@ export function delay(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export function safariDelay(browser:string, ms:number){
-    if(browser==="safari"){
-        return new Promise(resolve => setTimeout(resolve, ms));
-    };
-    return;
-};
 
 // Get element by
 export async function getElByID(driver:WebDriver, ttl:number, id:string){

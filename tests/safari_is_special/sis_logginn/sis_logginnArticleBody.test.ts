@@ -25,7 +25,7 @@ it("waits for "+browserDriver+" to start", async ()=>{
 describe((browserDriver+" tests").toUpperCase(), ()=>{
     it("sets up the testing area", async ()=>{
         await driver.get(rootURL);
-        await closeGDPR(driver, ttl);
+        expect(await closeGDPR(driver, ttl)).toBeNull();
     });
     
     it("logs in from article body", async ()=>{
@@ -65,6 +65,6 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
     });
 });
 
-it("stops "+browserDriver, ()=>{
-    driver.quit();
+it("stops "+browserDriver, async ()=>{
+    await driver.quit();
 });

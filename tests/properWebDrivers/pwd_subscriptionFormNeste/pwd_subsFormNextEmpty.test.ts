@@ -40,7 +40,7 @@ browserList.forEach(browserDriver =>{
                 velgProduktList = await mainSection.findElements(By.css("li"));
                 // if 'Velg produkt' options are found
                 expect(velgProduktList.length).toBe(2);
-                await closeGDPR(driver, ttl);
+                expect(await closeGDPR(driver, ttl)).toBeNull();
             });
     
             it("checks if Next button is disabled when nothing selected in 'Velg produkt'", async ()=>{
@@ -64,7 +64,7 @@ browserList.forEach(browserDriver =>{
             });   
         });
     });
-    it("stops "+browserDriver, ()=>{
-        driver.quit();
+    it("stops "+browserDriver, async ()=>{
+        await driver.quit();
     });
 });

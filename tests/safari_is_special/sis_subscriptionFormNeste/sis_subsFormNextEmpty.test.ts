@@ -58,6 +58,6 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
         });   
     });
 });
-it("stops "+browserDriver, ()=>{
-    driver.quit();
+it("stops "+browserDriver, async ()=>{
+    await driver.quit();
 });

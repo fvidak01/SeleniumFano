@@ -37,7 +37,7 @@ browserList.forEach(browserDriver =>{
     describe((browserDriver+" tests").toUpperCase(), ()=>{
         it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
-            await closeGDPR(driver, ttl);
+            expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
         it("logs in from article body", async ()=>{
@@ -73,7 +73,7 @@ browserList.forEach(browserDriver =>{
         });
     });
     
-    it("stops "+browserDriver, ()=>{
-        driver.quit();
+    it("stops "+browserDriver, async ()=>{
+        await driver.quit();
     });
 });
