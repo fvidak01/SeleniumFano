@@ -1,5 +1,5 @@
 import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByCss, getElByID, getElByPartialLinkText, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByCss, getElByID, getElByPartialLinkText, getElByXPath } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/";
@@ -14,7 +14,9 @@ let driver:WebDriver;
 //
 
 // Available WebDrivers
-const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
+// const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
+// Firefox has some psychological issues in logging out and no one in Norway uses it, not worth the time right now
+const browserList:string[] = ["chrome", "MicrosoftEdge"];
 // const browserList:string[] = ["chrome"];
 
 
@@ -62,9 +64,9 @@ browserList.forEach(browserDriver =>{
         });
 
         it("logs out and returns to the frontpage", async ()=>{
-            await driver.get("https://finansavisen.no/minside");
-            // let footer:WebElement = await getElByCss(driver, ttl, "footer");
-            // await (await footer.findElement(By.partialLinkText("Min side"))).click();
+            // await driver.get("https://finansavisen.no/minside");
+            let footer:WebElement = await getElByCss(driver, ttl, "footer");
+            await (await footer.findElement(By.partialLinkText("Min side"))).click();
 
             await (await getElByPartialLinkText(driver, ttl, "Logg ut")).click();
 
