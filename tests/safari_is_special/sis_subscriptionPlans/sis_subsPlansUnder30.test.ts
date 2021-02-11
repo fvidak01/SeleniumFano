@@ -26,7 +26,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
 
     it("sets up the testing area", async ()=>{
         await driver.get(rootURL);
-        await closeGDPR(driver, ttl);
+        expect(await closeGDPR(driver, ttl)).toBeNull();
         mainSection = await getElByID(driver, ttl, "subscription-form");
         // if main form section is found
         expect(mainSection).toBeDefined();
@@ -91,6 +91,6 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
     });
 });
 
-it("stops "+browserDriver, ()=>{
-    driver.quit();
+it("stops "+browserDriver, async ()=>{
+    await driver.quit();
 });

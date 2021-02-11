@@ -33,7 +33,7 @@ browserList.forEach(browserDriver =>{
 
             it("sets up the paper form", async ()=>{
                 await driver.get(rootURL);
-                await closeGDPR(driver, ttl);
+                expect(await closeGDPR(driver, ttl)).toBeNull();
                 // if main form section is found
                 mainSection = await getElByID(driver, ttl, "subscription-form");
                 expect(mainSection).toBeDefined();
@@ -128,8 +128,8 @@ browserList.forEach(browserDriver =>{
             });
         });
     });
-    it("stops "+browserDriver, ()=>{
-        driver.quit();
+    it("stops "+browserDriver, async ()=>{
+        await driver.quit();
     });
 });
 

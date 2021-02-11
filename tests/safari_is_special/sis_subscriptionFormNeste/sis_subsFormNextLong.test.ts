@@ -1,5 +1,5 @@
 import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, getElByID, closeGDPR, safariDelay } from "../../../easifier";
+import { buildDriver, getElByID, closeGDPR, delay } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/abonnement/post-launch";
@@ -29,7 +29,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
 
         it("sets up the paper form", async ()=>{
             await driver.get(rootURL);
-            await closeGDPR(driver, ttl);
+            expect(await closeGDPR(driver, ttl)).toBeNull();
             // if main form section is found
             mainSection = await getElByID(driver, ttl, "subscription-form");
             expect(mainSection).toBeDefined();
@@ -115,7 +115,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             await formInputs[10].click();
             await formInputs[10].sendKeys("asd", Key.TAB);
             // Neste
-            await nextButton.click().then(async ()=>await safariDelay(browserDriver, 1000));
+            await nextButton.click().then(async ()=>await delay(1000));
 
             await driver.wait(until.urlContains("connectid.no"), ttl)
                     .then(
@@ -132,6 +132,6 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
         });
     });
 });
-it("stops "+browserDriver, ()=>{
-    driver.quit();
+it("stops "+browserDriver, async ()=>{
+    await driver.quit();
 });
