@@ -1,5 +1,5 @@
 import{ By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByClass, getElByID, getElByPartialLinkText, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, getElByClass, getElByPartialLinkText, getElByXPath } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/abonnement";
@@ -23,8 +23,8 @@ browserList.forEach(browserDriver =>{
             driver = await buildDriver(browserDriver);
         else
             driver = await buildEdgeDriver();
-        // In Testing
-        driver.manage().window().maximize();
+        // Requires testing if it helps
+        // driver.manage().window().maximize();
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{

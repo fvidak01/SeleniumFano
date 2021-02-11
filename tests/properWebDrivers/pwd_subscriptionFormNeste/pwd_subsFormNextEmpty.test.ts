@@ -9,7 +9,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 
 // Available WebDrivers
 const browserList:string[] = ["firefox", "MicrosoftEdge", "chrome"];
-// const browserList:string[] = ["firefox"];
+// const browserList:string[] = ["chrome"];
 
 let driver:WebDriver,
     mainSection:WebElement;
