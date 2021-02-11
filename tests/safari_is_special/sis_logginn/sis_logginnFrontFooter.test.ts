@@ -25,7 +25,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
     });
 
     it("finds 'Logg inn' in footer and logs in", async ()=>{
-        await delay(1000);
+        // await delay(1000);
         let footer:WebElement = await getElByCss(driver, ttl, "footer");
         await (await footer.findElement(By.partialLinkText("Logg inn"))).click();
 
@@ -55,16 +55,16 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
     });
 
     it("logs out and returns to the frontpage", async ()=>{
-        await delay(1000);
+        // await delay(1000);
         let footer:WebElement = await getElByCss(driver, ttl, "footer");
         let el = await footer.findElement(By.partialLinkText("Min side"));
-        await delay(500);
+        // await delay(500);
         await el.click();
-
+        await driver.wait(until.elementLocated(By.id("footer")));
         let temp = await getElByXPath(driver, ttl, "/html/body/div/header/div[2]/nav/div/div/div[2]/a")
         await temp.click()
         .then(async ()=>{
-            await delay(750);
+            // await delay(750);
             let el:WebElement = await getElByXPath(driver, ttl, "//div[@id='js-expand-menu']/div/div/a");
             expect(await el.getAttribute("textContent")).toMatch("Kjøp");
         });

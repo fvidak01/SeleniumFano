@@ -1,4 +1,4 @@
-import { Key, until, WebDriver, WebElement } from "selenium-webdriver";
+import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
 import { buildDriver, closeGDPR, delay, getElByClass, getElByID, getElByXPath } from "../../../easifier";
 
 // Starting URL
@@ -58,7 +58,8 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
         let temp = await getElByXPath(driver, ttl, "/html/body/div[1]/header/div[2]/nav/div/div/div[2]/a")
         await temp.click()
             .then(async ()=>{
-                await delay(750);
+                // await delay(750);
+                await driver.wait(until.elementLocated(By.id("footer")));
                 let el:WebElement = await getElByXPath(driver, ttl, "//div[@id='js-expand-menu']/div/div/a");
                 expect(await el.getAttribute("textContent")).toMatch("Kjøp");
             });
