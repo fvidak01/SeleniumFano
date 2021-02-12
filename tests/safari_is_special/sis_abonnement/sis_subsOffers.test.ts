@@ -1,5 +1,5 @@
 import{ By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, closeGDPR, getElByClass, getElByPartialLinkText, getElByXPath } from "../../../easifier";
+import { buildDriver, getElByClass, getElByPartialLinkText, getElByXPath } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/abonnement";

@@ -115,9 +115,9 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             await formInputs[10].click();
             await formInputs[10].sendKeys("asd", Key.TAB);
             // Neste
-            await nextButton.click().then(async ()=>await delay(1000));
+            await nextButton.click();
 
-            await driver.wait(until.urlContains("connectid.no"), ttl)
+            await driver.wait(until.elementLocated(By.id("heading")), ttl)
                     .then(
                         async ()=>{
                             let errorMssgs:WebElement[] = await mainSection.findElements(By.className("c-registration__row__msg--error ")).catch(()=>null);

@@ -65,7 +65,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             driver = await buildDriver(browserDriver);
             await driver.get(rootURL);
             await closeGDPR(driver, ttl);
-            await driver.wait(until.elementLocated(By.id("footer")));
+            await driver.wait(until.elementLocated(By.id("footer")), ttl);
         });
 
         afterEach(async ()=>{
@@ -76,7 +76,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[1]");
             expect(await el.getAttribute("href")).toMatch("/abonnement");
             await el.click();
-            await driver.wait(until.elementLocated(By.id("subscription-offers")));
+            await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
             expect(await driver.getTitle()).toMatch("Abonnement | Finansavisen");
         });
 
@@ -84,7 +84,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[3]");
             expect(await el.getAttribute("href")).toMatch("/arkiv");
             await el.click();
-            await driver.wait(until.elementLocated(By.className("c-article__title")));
+            await driver.wait(until.elementLocated(By.className("c-article__title")), ttl);
             expect(await driver.getTitle()).toMatch("Arkiv | Finansavisen");
         });
 
@@ -92,7 +92,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[4]");
             expect(await el.getAttribute("href")).toMatch("/personvern");
             await el.click();
-            await driver.wait(until.elementLocated(By.className("c-article__title")));
+            await driver.wait(until.elementLocated(By.className("c-article__title")), ttl);
             expect(await driver.getTitle()).toMatch("Personvern | Finansavisen");
         });
 
@@ -100,7 +100,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[5]");
             expect(await el.getAttribute("href")).toMatch("/cookies");
             await el.click();
-            await driver.wait(until.elementLocated(By.className("c-article__title")));
+            await driver.wait(until.elementLocated(By.className("c-article__title")), ttl);
             expect(await driver.getTitle()).toMatch("Cookies | Finansavisen");
         });
         
@@ -108,7 +108,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[6]");
             expect(await el.getAttribute("href")).toMatch("/vilkar");
             await el.click();
-            await driver.wait(until.elementLocated(By.className("c-article__title")));
+            await driver.wait(until.elementLocated(By.className("c-article__title")), ttl);
             expect(await driver.getTitle()).toMatch("Vilkår | Finansavisen");
         });
         
@@ -116,7 +116,7 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[9]");
             expect(await el.getAttribute("href")).toMatch("/om-oss");
             await el.click();
-            await driver.wait(until.elementLocated(By.className("c-article__title")));
+            await driver.wait(until.elementLocated(By.className("c-article__title")), ttl);
             expect(await driver.getTitle()).toMatch("Om oss | Finansavisen");
         });
     });
