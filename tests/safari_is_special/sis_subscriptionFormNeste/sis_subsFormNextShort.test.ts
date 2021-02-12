@@ -1,5 +1,5 @@
 import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, getElByID, closeGDPR, safariDelay } from "../../../easifier";
+import { buildDriver, getElByID, closeGDPR, delay } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/abonnement/post-launch";
@@ -95,9 +95,10 @@ describe((browserDriver+" tests").toUpperCase(), ()=>{
             await formInputs[3].click();
             await formInputs[3].sendKeys("q@a.at", Key.TAB);
             // Neste
-            await nextButton.click().then(async ()=>await safariDelay(browserDriver, 750));
+            await nextButton.click();
+            // .then(async ()=>await delay(750));
 
-            await driver.wait(until.urlContains("connectid.no"), ttl)
+            await driver.wait(until.elementLocated(By.id("heading")), ttl)
                 .then(
                     async ()=>{
                         let errorMssgs:WebElement[] = await mainSection.findElements(By.className("c-registration__row__msg--error ")).catch(()=>null);

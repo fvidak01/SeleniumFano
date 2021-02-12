@@ -15,7 +15,7 @@ let driver:WebDriver;
 
 // Available WebDrivers
 // const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
-// Firefox has some psychological issues in logging out and no one in Norway uses it, not worth the time right now
+    // Firefox has some psychological issues in logging out and no one in Norway uses it, not worth the time right now
 const browserList:string[] = ["chrome", "MicrosoftEdge"];
 // const browserList:string[] = ["chrome"];
 
