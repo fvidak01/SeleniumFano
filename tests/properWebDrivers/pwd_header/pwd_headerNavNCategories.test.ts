@@ -16,8 +16,8 @@ let driver:WebDriver;
 // Available WebDrivers
 // const browserList:string[] = ["chrome", "MicrosoftEdge", "firefox"];
     // Firefox is a mess
-// const browserList:string[] = ["chrome", "MicrosoftEdge"];
-const browserList:string[] = ["chrome"];
+const browserList:string[] = ["chrome", "MicrosoftEdge"];
+// const browserList:string[] = ["chrome"];
 
 
 browserList.forEach(browserDriver =>{
