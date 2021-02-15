@@ -14,7 +14,7 @@ let driver:WebDriver;
 //
 
 // Available WebDrivers
-const browserList:string[] = ["firefox", "chrome", "MicrosoftEdge"];
+const browserList:string[] = ["chrome", "MicrosoftEdge", "firefox"];
 // const browserList:string[] = ["chrome"];
 
 
