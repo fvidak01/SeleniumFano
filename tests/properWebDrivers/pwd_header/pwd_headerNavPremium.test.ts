@@ -16,7 +16,7 @@ let driver:WebDriver;
 // Available WebDrivers
 // const browserList:string[] = ["chrome", "MicrosoftEdge", "firefox"];
     // Firefox is a mess
-const browserList:string[] = ["chrome", "MicrosoftEdge"];
+const browserList:string[] = ["MicrosoftEdge", "chrome"];
 // const browserList:string[] = ["firefox"];
 
 
@@ -34,7 +34,7 @@ browserList.forEach(browserDriver =>{
             expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
-        it("checks if 1st item ('Alle saker') opens corrent category", async ()=>{
+        it("checks if 1st item ('Alle saker') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
             expect(await category.getAttribute("textContent")).toMatch("Premium");
             await category.click();
@@ -47,8 +47,7 @@ browserList.forEach(browserDriver =>{
             expect(await driver.getTitle()).toMatch("Premium | Finansavisen");
         });
 
-        it("checks if 2nd item ('Lunsjguiden') opens corrent category", async ()=>{
-
+        it("checks if 2nd item ('Lunsjguiden') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
             expect(await category.getAttribute("textContent")).toMatch("Premium");
             await category.click();
@@ -61,8 +60,7 @@ browserList.forEach(browserDriver =>{
             expect(await driver.getTitle()).toMatch("Lunsjguiden - Premium | Finansavisen");
         });
 
-        it("checks if 3rd item ('Klokker') opens corrent category", async ()=>{
-
+        it("checks if 3rd item ('Klokker') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
             expect(await category.getAttribute("textContent")).toMatch("Premium");
             await category.click();
@@ -75,8 +73,7 @@ browserList.forEach(browserDriver =>{
             expect(await driver.getTitle()).toMatch("Klokker - Premium | Finansavisen");
         });
 
-        it("checks if 4th item ('Mat & drikke') opens corrent category", async ()=>{
-
+        it("checks if 4th item ('Mat & drikke') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
             expect(await category.getAttribute("textContent")).toMatch("Premium");
             await category.click();
