@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, getElByXPath } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/";
@@ -14,7 +14,7 @@ let driver:WebDriver;
 //
 
 // Available WebDrivers
-const browserList:string[] = ["chrome", "MicrosoftEdge", "firefox"];
+const browserList:string[] = ["firefox", "MicrosoftEdge", "chrome"];
 // const browserList:string[] = ["chrome"];
 
 
@@ -27,9 +27,9 @@ browserList.forEach(browserDriver =>{
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
-        it("sets up the testing area", async ()=>{
+        beforeEach(async ()=>{
+        // it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
-            expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
         it("checks 1st ('Tips oss') nav link", async ()=>{
@@ -38,7 +38,7 @@ browserList.forEach(browserDriver =>{
             expect(await el.getAttribute("textContent")).toMatch("Tips oss");
         });
 
-        describe("Testing items without dropdowns", ()=>{
+        // describe("Testing items without dropdowns", ()=>{
             it("checks 3rd ('Børs') nav link", async ()=>{
                 let el:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[3]/a");
                 expect(await el.getAttribute("href")).toMatch("https://bors.finansavisen.no/");
@@ -63,11 +63,11 @@ browserList.forEach(browserDriver =>{
                 expect(await driver.getTitle()).toMatch("FaTV | Finansavisen");
             });
 
-            afterEach(async ()=>{
-                await driver.navigate().back();
-                await driver.wait(until.elementLocated(By.className("c-header-bar-nav__list")));
-            });
-        });
+            // afterEach(async ()=>{
+            //     await driver.navigate().back();
+            //     await driver.wait(until.elementLocated(By.className("c-header-bar-nav__list")));
+            // });
+        // });
     });
     
     it("stops "+browserDriver, async ()=>{

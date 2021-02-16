@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, getElByXPath } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no";
@@ -14,30 +14,27 @@ let driver:WebDriver;
 //
 
 // Available WebDrivers
-// const browserList:string[] = ["chrome", "MicrosoftEdge", "firefox"];
-    // Firefox is a mess
-const browserList:string[] = ["MicrosoftEdge", "chrome"];
+const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
 // const browserList:string[] = ["chrome"];
 
 
 browserList.forEach(browserDriver =>{
     it("waits for "+browserDriver+" to start", async ()=>{
         if(browserDriver!="MicrosoftEdge")
-        driver = await buildDriver(browserDriver);
-    else
-        driver = await buildEdgeDriver();
+            driver = await buildDriver(browserDriver);
+        else
+            driver = await buildEdgeDriver();
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
         it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
-            expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
         it("checks if 1st item ('Siste 24 timer') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
             
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Siste 24 timer"));
@@ -51,7 +48,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 2nd item ('Nyheter') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Alle pluss-artikler"));
@@ -65,7 +62,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 3rd item ('Leder') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Leder"));
@@ -79,7 +76,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 4th item ('Bolig') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Bolig"));
@@ -93,7 +90,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 5th item ('Børs') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Børs"));
@@ -107,7 +104,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 6th item ('Energi') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Energi"));
@@ -121,7 +118,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 7th item ('Finans') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Finans"));
@@ -135,7 +132,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 8th item ('Personlig økonomi') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Personlig økonomi"));
@@ -149,7 +146,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 9th item ('Shipping') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Shipping"));
@@ -163,7 +160,7 @@ browserList.forEach(browserDriver =>{
         it("checks if 10th item ('Sjømat') opens correct category", async ()=>{
             let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
             expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-            await category.click();
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
 
             await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
             let el:WebElement = await category.findElement(By.linkText("Sjømat"));
