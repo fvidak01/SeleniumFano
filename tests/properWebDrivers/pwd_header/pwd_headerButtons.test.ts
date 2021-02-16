@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByClass, getElByID } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, getElByClass, getElByID } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = "https://finansavisen.no/";
@@ -29,7 +29,6 @@ browserList.forEach(browserDriver =>{
     describe((browserDriver+" tests").toUpperCase(), ()=>{
         it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
-            expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
         it("checks if logo leads to frontpage", async ()=>{
