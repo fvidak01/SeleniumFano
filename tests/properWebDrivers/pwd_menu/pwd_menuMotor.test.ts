@@ -10,7 +10,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 let driver:WebDriver;
 
 //
-// Testing Premium subcategory links in header
+// Testing Motor subcategory links in header
 //
 
 // Available WebDrivers
@@ -92,7 +92,7 @@ browserList.forEach(browserDriver =>{
             expect(await driver.getTitle()).toMatch("Gadgets - Motor | Finansavisen");
         });
 
-        it("checks if 1st link ('Design og teknikk') leads to Motor Design og teknikk", async ()=>{
+        it("checks if 7th link ('Design og teknikk') leads to Motor Design og teknikk", async ()=>{
             let el:WebElement = await menuButton.findElement(By.linkText("Design og teknikk"));
             expect(await el.getAttribute("href")).toMatch("/motor/design-og-teknikk");
             await el.click();
