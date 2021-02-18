@@ -2,7 +2,7 @@ import { WebDriver } from "selenium-webdriver";
 import { buildDriver, buildEdgeDriver, closeGDPR } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = ""; //Required
+const rootURL:string = //Required -> process.env.* || "";
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -14,16 +14,16 @@ let driver:WebDriver;
 //
 
 // Available WebDrivers
-const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
+const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome"];
 // const browserList:string[] = ["chrome"];
 
 
 browserList.forEach(browserDriver =>{
     it("waits for "+browserDriver+" to start", async ()=>{
         if(browserDriver!="MicrosoftEdge")
-        driver = await buildDriver(browserDriver);
-    else
-        driver = await buildEdgeDriver();
+            driver = await buildDriver(browserDriver);
+        else
+            driver = await buildEdgeDriver();
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
