@@ -10,7 +10,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 let driver:WebDriver;
 
 //
-// Testing links in 3rd row of Menu dropdown list on header
+// Testing links in 4th row of Menu dropdown list on header
 //
 
 // Available WebDrivers
