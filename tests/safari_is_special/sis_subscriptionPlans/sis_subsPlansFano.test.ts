@@ -2,7 +2,7 @@ import { By, WebDriver, WebElement } from "selenium-webdriver";
 import { buildDriver, closeGDPR, getElByID } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = "https://finansavisen.no/abonnement/post-launch?offer=finansavisen";
+const rootURL:string = process.env.SUB_PLANS_FANO || "https://finansavisen.no/abonnement/post-launch?offer=finansavisen";
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;

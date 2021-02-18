@@ -3,7 +3,7 @@ import { buildDriver, closeGDPR, delay, getElByID, getElByPartialLinkText, getEl
 
 
 // Starting URL
-const rootURL:string = "https://finansavisen.no/";
+const rootURL:string = process.env.LOGIN || "https://finansavisen.no/";
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;

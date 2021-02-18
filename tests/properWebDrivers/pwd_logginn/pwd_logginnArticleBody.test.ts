@@ -10,7 +10,7 @@ import {
 } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = "https://fa.no/7622333/";
+const rootURL:string = process.env.LOGIN_ARTICLE || "https://fa.no/7622333/";
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
