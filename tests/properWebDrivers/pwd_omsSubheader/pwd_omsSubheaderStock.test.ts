@@ -2,7 +2,7 @@ import { By, until, WebDriver, WebElement } from "selenium-webdriver";
 import { buildDriver, buildEdgeDriver, getElByID } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.OMS || "https://finansavisen.no/";
+const rootURL:string = process.env.OMS;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -42,14 +42,14 @@ browserList.forEach(browserDriver =>{
 async function CheckStockItems(item:string, index:number){
     it("checks if link \'"+item+"\' opens Børs", async ()=>{
         await driver.get(rootURL);
-        await driver.wait(until.elementLocated(By.id("stock")));
+        await driver.wait(until.elementLocated(By.id("stock")), ttl);
         let stockWrapper:WebElement = await getElByID(driver, ttl, "stock");
 
         let els = await stockWrapper.findElements(By.css("a"));
         expect(await els[index].getAttribute("href")).toMatch("bors.finansavisen.no");
         await els[index].click();
 
-        await driver.wait(until.elementLocated(By.id("root")));
+        await driver.wait(until.elementLocated(By.id("root")), ttl);
         expect(await driver.getTitle()).toMatch("Finansavisen");
     });
 };

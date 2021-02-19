@@ -45,24 +45,35 @@ export function delay(ms:number) {
 export async function getElByID(driver:WebDriver, ttl:number, id:string){
     const _el:WebElement = await driver.wait(until.elementLocated(By.id(id)), ttl);
     return _el;
-}
+};
 
 export async function getElByXPath(driver:WebDriver, ttl:number, xpath:string){
     const _el:WebElement = await driver.wait(until.elementLocated(By.xpath(xpath)), ttl);
     return _el ;
-}
+};
 
 export async function getElByPartialLinkText(driver:WebDriver, ttl:number, text:string){
     const _el:WebElement = await driver.wait(until.elementLocated(By.partialLinkText(text)), ttl);
     return _el;
-}
+};
 
 export async function getElByClass(driver:WebDriver, ttl:number, text:string){
     const _el:WebElement = await driver.wait(until.elementLocated(By.className(text)), ttl);
     return _el;
-}
+};
 
 export async function getElByCss(driver:WebDriver, ttl:number, text:string){
     const _el:WebElement = await driver.wait(until.elementLocated(By.css(text)), ttl);
     return _el;
-}
+};
+
+// Get 1st, 2nd, 3rd, 4th... from 1, 2, 3, 4...
+export function nOrderStringify(n:number):string{
+    if (n%100 === 11 || n%100 === 12 || n%100 === 13) return n+"th";
+    switch (n%10){
+        case 1: return n+"st";
+        case 2: return n+"nd";
+        case 3: return n+"rd";
+        default: return n+"th";
+    }
+};

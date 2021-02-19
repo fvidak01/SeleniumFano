@@ -1,8 +1,8 @@
 import { Key, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByID, getElByPartialLinkText, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, getElByID, getElByPartialLinkText, getElByXPath } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.LOGIN || "https://finansavisen.no/";
+const rootURL:string = process.env.LOGIN;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;

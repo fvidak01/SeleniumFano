@@ -1,8 +1,8 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, getElByXPath, nOrderStringify } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.HEADER || "https://finansavisen.no";
+const rootURL:string = process.env.HEADER;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -31,106 +31,36 @@ browserList.forEach(browserDriver =>{
             await driver.get(rootURL);
         });
 
-        it("checks if 1st item ('Alle saker') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-            
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Alle saker"));
-            expect(await el.getAttribute("href")).toMatch("/motor");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("o-layout")));
-            expect(await driver.getTitle()).toMatch("Motor | Finansavisen");
-        });
-
-        it("checks if 2nd item ('Nyheter') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Nyheter"));
-            expect(await el.getAttribute("href")).toMatch("/nyheter");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Nyheter - Motor | Finansavisen");
-        });
-
-        it("checks if 3rd item ('Biltester') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Biltester"));
-            expect(await el.getAttribute("href")).toMatch("/biltester");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Biltester - Motor | Finansavisen");
-        });
-
-        it("checks if 4th item ('Reportasjer') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Reportasjer"));
-            expect(await el.getAttribute("href")).toMatch("/reportasjer");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Reportasjer - Motor | Finansavisen");
-        });
-
-        it("checks if 5th item ('Klassiske biler') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Klassiske biler"));
-            expect(await el.getAttribute("href")).toMatch("/klassiske-biler");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Klassiske biler - Motor | Finansavisen");
-        });
-
-        it("checks if 6th item ('Båt') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Båt"));
-            expect(await el.getAttribute("href")).toMatch("/bat");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Båt - Motor | Finansavisen");
-        });
-
-        it("checks if 7th item ('Gadgets') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-            expect(await category.getAttribute("textContent")).toMatch("Motor");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Gadgets"));
-            expect(await el.getAttribute("href")).toMatch("/gadgets");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Gadgets - Motor | Finansavisen");
-        });
+        CheckItem(1, "Alle saker", "/motor", "");
+        CheckItem(2, "Nyheter");
+        CheckItem(3, "Biltester");
+        CheckItem(4, "Reportasjer");
+        CheckItem(5, "Klassiske biler", "/klassiske-biler");
+        CheckItem(6, "Båt", "/bat");
+        CheckItem(7, "Gadgets");
     });
     
     it("stops "+browserDriver, async ()=>{
         await driver.quit();
     });
 });
+
+async function CheckItem(
+    n:number,
+    item:string,
+    link:string = item.toLowerCase(), 
+    title:string = item+" - "){
+
+        it("checks if "+nOrderStringify(n)+" item (\'"+item+"\') opens correct category", async ()=>{
+            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
+            expect(await category.getAttribute("textContent")).toMatch("Motor");
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
+            
+            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")), ttl);
+            let el:WebElement = await category.findElement(By.linkText(item));
+            expect(await el.getAttribute("href")).toMatch(link);
+            await el.click();   
+            await driver.wait(until.elementLocated(By.className("o-section")), ttl);
+            expect(await driver.getTitle()).toMatch(title+"Motor | Finansavisen");
+        });
+};

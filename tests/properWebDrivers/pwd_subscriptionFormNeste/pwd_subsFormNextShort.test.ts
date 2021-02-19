@@ -2,7 +2,7 @@ import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
 import { buildDriver, getElByID, closeGDPR, buildEdgeDriver } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.SUB_FORM || "https://finansavisen.no/abonnement/post-launch";
+const rootURL:string = process.env.SUB_FORM;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -11,8 +11,8 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome",];
 // const browserList:string[] = ["chrome"];
 
-let driver:WebDriver,
-    mainSection:WebElement;
+let driver:WebDriver;
+let mainSection:WebElement;
 
 // 
 // Testing if Subscription form is being checked on Next
@@ -101,7 +101,6 @@ browserList.forEach(browserDriver =>{
                 await formInputs[3].sendKeys("q@a.at", Key.TAB);
                 // Neste
                 await nextButton.click();
-                // .then(async ()=>await safariDelay(browserDriver, 750));
     
                 await driver.wait(until.urlContains("connectid.no"), ttl)
                     .then(
