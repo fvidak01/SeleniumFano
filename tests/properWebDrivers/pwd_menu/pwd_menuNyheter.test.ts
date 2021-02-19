@@ -75,13 +75,13 @@ async function CheckByLinkText(elNo:string, subcategory:string, link:string=subc
         let menuButton:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-header-bar__toggle-menu']")
         expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
         await driver.actions({bridge: true}).move({duration:100, origin:menuButton, x:0, y:0}).perform();
-        await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))));
+        await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))), ttl);
 
         let el:WebElement = await menuButton.findElement(By.linkText(subcategory));
         expect(await el.getAttribute("href")).toMatch("/nyheter/"+link);
         await el.click();
 
-        await driver.wait(until.elementLocated(By.className("o-section")));
+        await driver.wait(until.elementLocated(By.className("o-section")), ttl);
         expect(await driver.getTitle()).toMatch(subcategory+" - Nyheter | Finansavisen");
     });
 }
@@ -92,13 +92,13 @@ async function CheckByXPath(elNo:string, subcategory:string, xpath:string, link:
         let menuButton:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-header-bar__toggle-menu']")
         expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
         await driver.actions({bridge: true}).move({duration:100, origin:menuButton, x:0, y:0}).perform();
-        await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))));
+        await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))), ttl);
 
         let el:WebElement = await menuButton.findElement(By.xpath(xpath));
         expect(await el.getAttribute("href")).toMatch("/nyheter/"+link);
         await el.click();
 
-        await driver.wait(until.elementLocated(By.className("o-section")));
+        await driver.wait(until.elementLocated(By.className("o-section")), ttl);
         expect(await driver.getTitle()).toMatch(subcategory+" - Nyheter | Finansavisen");
     });
 }

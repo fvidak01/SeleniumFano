@@ -1,8 +1,8 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, getElByClass } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, getElByClass, nOrderStringify } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.OMS || "https://finansavisen.no/";
+const rootURL:string = process.env.OMS;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -27,38 +27,18 @@ browserList.forEach(browserDriver =>{
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
-        let subheader:WebElement;
-
-        beforeEach(async ()=>{
-            await driver.get(rootURL);
-            await driver.wait(until.elementLocated(By.id("stock")));
-            subheader = await getElByClass(driver, ttl, "c-oms-content");
-        });
-
-        it("checks if 1st link ('Markedsoversikt') opens Bors", async ()=>{
-            let el = await subheader.findElement(By.linkText("Markedsoversikt"));
-            expect(await el.getAttribute("href")).toMatch("https://bors.finansavisen.no");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.id("root")));
-            expect(await driver.getTitle()).toMatch("Finansavisen");
-        });
-
-        it("checks if 2nd link ('Kursliste') opens Kursliste", async ()=>{
-            let el = await subheader.findElement(By.linkText("Kursliste"));
-            expect(await el.getAttribute("href")).toMatch("https://bors.finansavisen.no/NO/kursliste");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.id("root")));
-            expect(await driver.getTitle()).toMatch("Fa Børs | Kursliste");
-        });
+        CheckLink(1, "Markedsoversikt", "Bors", "Finansavisen", "bors.finansavisen.no");
+        CheckLink(2, "Kursliste", "Kursliste", "Fa Børs | Kursliste", "bors.finansavisen.no/NO/kursliste");
 
         it("checks if 3rd link ('Valuta') opens Valutakurser", async ()=>{
+            await driver.get(rootURL);
+            await driver.wait(until.elementLocated(By.id("stock")), ttl);
+            let subheader:WebElement = await getElByClass(driver, ttl, "c-oms-content");
             let el = await subheader.findElement(By.linkText("Valuta"));
             expect(await el.getAttribute("href")).toMatch("/marked/valutakurser");
             await el.click();
 
-            await driver.wait(until.elementLocated(By.className("o-section")));
+            await driver.wait(until.elementLocated(By.className("o-section")), ttl);
             expect(await driver.getTitle()).toMatch("Valutakurser | Finansavisen");
         });
     });
@@ -67,3 +47,17 @@ browserList.forEach(browserDriver =>{
         await driver.quit();
     });
 });
+
+async function CheckLink(n:number, link:string, location:string=link, matchTitle:string, matchLink:string){
+    it("checks if "+nOrderStringify(n)+" link (\'"+link+"\') opens "+location, async ()=>{
+        await driver.get(rootURL);
+        await driver.wait(until.elementLocated(By.id("stock")), ttl);
+        let subheader:WebElement = await getElByClass(driver, ttl, "c-oms-content");
+        let el = await subheader.findElement(By.linkText(link));
+        expect(await el.getAttribute("href")).toMatch(matchLink);
+        await el.click();
+
+        await driver.wait(until.elementLocated(By.id("root")), ttl);
+        expect(await driver.getTitle()).toMatch(matchTitle);
+    });
+};

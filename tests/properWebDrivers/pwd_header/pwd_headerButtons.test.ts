@@ -36,7 +36,7 @@ browserList.forEach(browserDriver =>{
             let logo:WebElement = await header.findElement(By.className("c-header-bar__logo"));
             expect(await logo.getAttribute("href")).toMatch("/");
             await logo.click();
-            await driver.wait(until.elementLocated(By.id("latest-articles-desktop")));
+            await driver.wait(until.elementLocated(By.id("latest-articles-desktop")), ttl);
             expect(await driver.getTitle()).toMatch("Finansavisen | fa.no");
         });
 
@@ -46,7 +46,7 @@ browserList.forEach(browserDriver =>{
             expect(buttons.length).toBe(2);
             expect(await buttons[0].getAttribute("href")).toMatch("/abonnement");
             await buttons[0].click();
-            await driver.wait(until.elementLocated(By.id("subscription-offers")));
+            await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
             expect(await driver.getCurrentUrl()).toMatch("/abonnement");
         });
 
@@ -58,7 +58,7 @@ browserList.forEach(browserDriver =>{
             expect(buttons.length).toBe(2);
             expect(await buttons[1].getAttribute("href")).toMatch("/login");
             await buttons[1].click();
-            await driver.wait(until.elementLocated(By.id("j_username")));
+            await driver.wait(until.elementLocated(By.id("j_username")), ttl);
             expect(await driver.getCurrentUrl()).toMatch("/oauthLogin");
         });
     });

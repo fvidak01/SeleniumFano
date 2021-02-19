@@ -1,8 +1,8 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, getElByXPath, nOrderStringify } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.HEADER || "https://finansavisen.no";
+const rootURL:string = process.env.HEADER;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -31,60 +31,33 @@ browserList.forEach(browserDriver =>{
             await driver.get(rootURL);
         });
 
-        it("checks if 1st item ('Alle saker') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
-            expect(await category.getAttribute("textContent")).toMatch("Premium");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-            
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Alle saker"));
-            expect(await el.getAttribute("href")).toMatch("/premium");
-            await el.click();   
-            await driver.wait(until.elementLocated(By.className("o-layout")));
-            expect(await driver.getTitle()).toMatch("Premium | Finansavisen");
-        });
-
-        it("checks if 2nd item ('Lunsjguiden') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
-            expect(await category.getAttribute("textContent")).toMatch("Premium");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Lunsjguiden"));
-            expect(await el.getAttribute("href")).toMatch("/lunsjguiden");
-            await el.click();
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Lunsjguiden - Premium | Finansavisen");
-        });
-
-        it("checks if 3rd item ('Klokker') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
-            expect(await category.getAttribute("textContent")).toMatch("Premium");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Klokker"));
-            expect(await el.getAttribute("href")).toMatch("/klokker");
-            await el.click();
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Klokker - Premium | Finansavisen");
-        });
-
-        it("checks if 4th item ('Mat & drikke') opens correct category", async ()=>{
-            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
-            expect(await category.getAttribute("textContent")).toMatch("Premium");
-            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-
-            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")));
-            let el:WebElement = await category.findElement(By.linkText("Mat & drikke"));
-            expect(await el.getAttribute("href")).toMatch("/mat-og-drikke");
-            await el.click();
-            await driver.wait(until.elementLocated(By.className("selected")));
-            expect(await driver.getTitle()).toMatch("Mat & drikke - Premium | Finansavisen");
-        });
+        CheckItem(1, "Alle saker", "/premium", "");
+        CheckItem(2, "Lunsjguiden");
+        CheckItem(3, "Klokker");
+        CheckItem(4, "Mat & drikke", "/mat-og-drikke");
     });
     
     it("stops "+browserDriver, async ()=>{
         await driver.quit();
     });
 });
+
+async function CheckItem(
+    n:number,
+    item:string, 
+    link:string=item.toLowerCase(), 
+    title:string=item+" - "){
+        
+        it("checks if "+nOrderStringify(n)+" item (\'"+item+"\') opens correct category", async ()=>{
+            let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
+            expect(await category.getAttribute("textContent")).toMatch("Premium");
+            await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
+            
+            await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")), ttl);
+            let el:WebElement = await category.findElement(By.linkText(item));
+            expect(await el.getAttribute("href")).toMatch(link);
+            await el.click();   
+            await driver.wait(until.elementLocated(By.className("o-section")), ttl);
+            expect(await driver.getTitle()).toMatch(title+"Premium | Finansavisen");
+        });
+};

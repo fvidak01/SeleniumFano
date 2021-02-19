@@ -1,8 +1,8 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByID, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, getElByID, getElByXPath, nOrderStringify } from "../../../easifier";
 
 // Starting URL
-const rootURL:string = process.env.FOOTER || "https://finansavisen.no/";
+const rootURL:string = process.env.FOOTER;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -14,8 +14,8 @@ let driver:WebDriver;
 //
 
 // Available WebDrivers
-const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
-// const browserList:string[] = ["chrome"];
+// const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
+const browserList:string[] = ["chrome"];
 
 
 browserList.forEach(browserDriver =>{
@@ -62,54 +62,15 @@ browserList.forEach(browserDriver =>{
             it("checks 1st nav link", async ()=>{
                 expect(await footerNavLinks[0].getAttribute("href")).toMatch("/abonnement");
                 await footerNavLinks[0].click();
-                await driver.wait(until.elementLocated(By.id("subscription-offers")));
+                await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
                 expect(await driver.getTitle()).toMatch("Abonnement | Finansavisen");
             });
-
-            it("checks 3rd nav link", async ()=>{
-                let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[3]");
-                expect(await el.getAttribute("href")).toMatch("/arkiv");
-                await el.click();
-                await driver.wait(until.elementLocated(By.className("c-article__title")));
-                expect(await driver.getTitle()).toMatch("Arkiv | Finansavisen");
-            });
-
-            it("checks 4th nav link", async ()=>{
-                let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[4]");
-                expect(await el.getAttribute("href")).toMatch("/personvern");
-                await el.click();
-                await driver.wait(until.elementLocated(By.className("c-article__title")));
-                expect(await driver.getTitle()).toMatch("Personvern | Finansavisen");
-            });
-
-            it("checks 5th nav link", async ()=>{
-                let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[5]");
-                expect(await el.getAttribute("href")).toMatch("/cookies");
-                await el.click();
-                await driver.wait(until.elementLocated(By.className("c-article__title")));
-                expect(await driver.getTitle()).toMatch("Cookies | Finansavisen");
-            });
             
-            it("checks 6th nav link", async ()=>{
-                let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[6]");
-                expect(await el.getAttribute("href")).toMatch("/vilkar");
-                await el.click();
-                await driver.wait(until.elementLocated(By.className("c-article__title")));
-                expect(await driver.getTitle()).toMatch("Vilkår | Finansavisen");
-            });
-            
-            it("checks 9th nav link", async ()=>{
-                let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[9]");
-                expect(await el.getAttribute("href")).toMatch("/om-oss");
-                await el.click();
-                await driver.wait(until.elementLocated(By.className("c-article__title")));
-                expect(await driver.getTitle()).toMatch("Om oss | Finansavisen");
-            });
-
-            afterEach(async ()=>{
-                await driver.navigate().back();
-                await driver.wait(until.elementLocated(By.id("footer")));
-            });
+            CheckLink(3, "Arkiv");
+            CheckLink(4, "Personvern");
+            CheckLink(5, "Cookies");
+            CheckLink(6, "Vilkår", "/vilkar");
+            CheckLink(9, "Om oss", "/om-oss");
         });
         
     });
@@ -118,3 +79,13 @@ browserList.forEach(browserDriver =>{
         await driver.quit();
     });
 });
+
+async function CheckLink(n:number, item:string, link:string="/"+item.toLowerCase()){
+    it("checks "+nOrderStringify(n)+" nav link", async ()=>{
+        let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a["+n+"]");
+        expect(await el.getAttribute("href")).toMatch(link);
+        await el.click();
+        await driver.wait(until.elementLocated(By.className("c-article__title")), ttl);
+        expect(await driver.getTitle()).toMatch(item+" | Finansavisen");
+    });
+};
