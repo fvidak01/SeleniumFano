@@ -1,8 +1,9 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, nOrderStringify } from "../../../easifier";
+import { GetMenuButton } from "../../../helperMenu";
 
 // Starting URL
-const rootURL:string = process.env.MENU || "https://finansavisen.no/";
+const rootURL:string = process.env.MENU;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -27,40 +28,41 @@ browserList.forEach(browserDriver =>{
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
-        CheckByLinkText("1st", "Aksjeanalyse");
-        CheckByLinkText("2nd", "Aktuell");
-        CheckByLinkText("3rd", "Arbeidsliv");
-        CheckByLinkText("4th", "Bolig");
-        CheckByLinkText("5th", "Bygg og anlegg", "bygg-og-anlegg");
-        CheckByXPath("6th", "Børs", "//div[@id='menu-content']/nav/div[1]/div/div/div[6]/a", "borsdognet");
-        CheckByLinkText("7th", "Debattinnlegg");
-        CheckByLinkText("8th", "Energi");
-        CheckByLinkText("9th", "Finans");
-        CheckByLinkText("10th", "Fritidsbolig");
-        CheckByLinkText("11th", "Handel");
-        CheckByLinkText("12th", "Helse");
-        CheckByLinkText("13th", "Industri");
-        CheckByLinkText("14th", "Jus");
-        CheckByLinkText("15th", "Kommentar");
-        CheckByLinkText("16th", "Krim");
-        CheckByLinkText("17th", "Kultur");
-        CheckByLinkText("18th", "Landbruk");
-        CheckByLinkText("19th", "Luftfart");
-        CheckByLinkText("20th", "Makro");
-        CheckByLinkText("21st", "Markedskommentarer");
-        CheckByLinkText("22nd", "Miljø", "miljo");
-        CheckByLinkText("23rd", "Næringseiendom", "naeringseiendom");
-        CheckByLinkText("24th", "Næringsliv", "naeringsliv");
-        CheckByLinkText("25th", "Offentlig");
-        CheckByLinkText("26th", "Olje");
-        CheckByLinkText("27th", "Personlig økonomi", "personlig-okonomi");
-        CheckByLinkText("28th", "Politikk");
-        CheckByLinkText("29th", "Porteføljer", "portefoljer");
-        CheckByLinkText("30th", "Reiseliv");
-        CheckByLinkText("31st", "Shipping");
-        CheckByLinkText("32nd", "Sjømat", "sjomat");
-        CheckByLinkText("33rd", "Transport");
-        CheckByLinkText("34th", "Utenriks");
+
+        CheckLink(1, "Aksjeanalyse");
+        CheckLink(2, "Aktuell");
+        CheckLink(3, "Arbeidsliv");
+        CheckLink(4, "Bolig");
+        CheckLink(5, "Bygg og anlegg", "bygg-og-anlegg");
+        CheckLink(6, "Børs", "borsdognet", "xpath");
+        CheckLink(7, "Debattinnlegg");
+        CheckLink(8, "Energi");
+        CheckLink(9, "Finans");
+        CheckLink(10, "Fritidsbolig");
+        CheckLink(11, "Handel");
+        CheckLink(12, "Helse");
+        CheckLink(13, "Industri");
+        CheckLink(14, "Jus");
+        CheckLink(15, "Kommentar");
+        CheckLink(16, "Krim");
+        CheckLink(17, "Kultur");
+        CheckLink(18, "Landbruk");
+        CheckLink(19, "Luftfart");
+        CheckLink(20, "Makro");
+        CheckLink(21, "Markedskommentarer");
+        CheckLink(22, "Miljø", "miljo");
+        CheckLink(23, "Næringseiendom", "naeringseiendom");
+        CheckLink(24, "Næringsliv", "naeringsliv");
+        CheckLink(25, "Offentlig");
+        CheckLink(26, "Olje");
+        CheckLink(27, "Personlig økonomi", "personlig-okonomi");
+        CheckLink(28, "Politikk");
+        CheckLink(29, "Porteføljer", "portefoljer");
+        CheckLink(30, "Reiseliv");
+        CheckLink(31, "Shipping");
+        CheckLink(32, "Sjømat", "sjomat");
+        CheckLink(33, "Transport");
+        CheckLink(34, "Utenriks");
     });
     
     it("stops "+browserDriver, async ()=>{
@@ -69,32 +71,18 @@ browserList.forEach(browserDriver =>{
 });
 
 
-async function CheckByLinkText(elNo:string, subcategory:string, link:string=subcategory.toLowerCase()){
-    it("checks if "+elNo+" link (\'"+subcategory+"\') leads to Nyheter "+subcategory, async ()=>{
+async function CheckLink(n:number, subcategory:string, link:string=subcategory.toLowerCase(), by:string="text"){
+    it("checks if "+nOrderStringify(n)+" link (\'"+subcategory+"\') leads to Nyheter "+subcategory, async ()=>{
         await driver.get(rootURL);
-        let menuButton:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-header-bar__toggle-menu']")
+        let menuButton:WebElement = await GetMenuButton(driver, ttl);
         expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
-        await driver.actions({bridge: true}).move({duration:100, origin:menuButton, x:0, y:0}).perform();
-        await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))), ttl);
 
-        let el:WebElement = await menuButton.findElement(By.linkText(subcategory));
-        expect(await el.getAttribute("href")).toMatch("/nyheter/"+link);
-        await el.click();
+        let el:WebElement;
+        if(by === "text")
+            el = await menuButton.findElement(By.linkText(subcategory));
+        else
+            el = await menuButton.findElement(By.xpath(".//nav/div[1]/div/div/div["+n+"]/a"));
 
-        await driver.wait(until.elementLocated(By.className("o-section")), ttl);
-        expect(await driver.getTitle()).toMatch(subcategory+" - Nyheter | Finansavisen");
-    });
-}
-
-async function CheckByXPath(elNo:string, subcategory:string, xpath:string, link:string=subcategory.toLowerCase()){
-    it("checks if "+elNo+" link (\'"+subcategory+"\') leads to Nyheter "+subcategory, async ()=>{
-        await driver.get(rootURL);
-        let menuButton:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-header-bar__toggle-menu']")
-        expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
-        await driver.actions({bridge: true}).move({duration:100, origin:menuButton, x:0, y:0}).perform();
-        await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))), ttl);
-
-        let el:WebElement = await menuButton.findElement(By.xpath(xpath));
         expect(await el.getAttribute("href")).toMatch("/nyheter/"+link);
         await el.click();
 

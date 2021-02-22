@@ -1,8 +1,9 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, nOrderStringify } from "../../../easifier";
+import { GetMenuButton } from "../../../helperMenu";
 
 // Starting URL
-const rootURL:string = process.env.MENU || "https://finansavisen.no/";
+const rootURL:string = process.env.MENU;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -27,63 +28,20 @@ browserList.forEach(browserDriver =>{
     });
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
-        let menuButton:WebElement;
-
-        beforeEach(async ()=>{
+        it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
-
-            menuButton = await getElByXPath(driver, ttl, "//div[@class='c-header-bar__toggle-menu']")
-            expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
-            await driver.actions({bridge: true}).move({duration:100, origin:menuButton, x:0, y:0}).perform();
-            await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))));
         });
-
-        it("checks if 1st link ('Nyheter') leads to Nyheter", async ()=>{
-            let el:WebElement = await menuButton.findElement(By.linkText("Nyheter"));
-            expect(await el.getAttribute("href")).toMatch("/nyheter");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("o-section")));
-            expect(await driver.getTitle()).toMatch("Nyheter | Finansavisen");
-        });
-
-        it("checks if 2nd link ('Motor') leads to Motor", async ()=>{
-            let el:WebElement = await menuButton.findElement(By.linkText("Motor"));
-            expect(await el.getAttribute("href")).toMatch("/motor");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("o-section")));
-            expect(await driver.getTitle()).toMatch("Motor | Finansavisen");
-        });
-
-        it("checks if 3rd link ('Premium') leads to Premium", async ()=>{
-            let el:WebElement = await menuButton.findElement(By.linkText("Premium"));
-            expect(await el.getAttribute("href")).toMatch("/premium");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("o-section")));
-            expect(await driver.getTitle()).toMatch("Premium | Finansavisen");
-        });
-
-        it("checks if 4th link ('Vext') leads to Vext", async ()=>{
-            let el:WebElement = await menuButton.findElement(By.linkText("Vext"));
-            expect(await el.getAttribute("href")).toMatch("/vext");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("o-section")));
-            expect(await driver.getTitle()).toMatch("Vext | Finansavisen");
-        });
-
-        it("checks if 5th link ('Lørdag') leads to Lørdag", async ()=>{
-            let el:WebElement = await menuButton.findElement(By.linkText("Lørdag"));
-            expect(await el.getAttribute("href")).toMatch("/lordag");
-            await el.click();
-
-            await driver.wait(until.elementLocated(By.className("o-section")));
-            expect(await driver.getTitle()).toMatch("Lørdag | Finansavisen");
-        });
-
+        
+        CheckLink(1, "Nyheter");
+        CheckLink(2, "Motor");
+        CheckLink(3, "Premium");
+        CheckLink(4, "Vext");
+        CheckLink(5, "Lørdag", "lordag");
+        
         it("checks if 6th link ('Kapital') leads to Kapital", async ()=>{
+            let menuButton:WebElement = await GetMenuButton(driver, ttl);
+            expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
+
             let el:WebElement = await menuButton.findElement(By.linkText("Kapital"));
             expect(await el.getAttribute("href")).toMatch("https://kapital.no/");
             await el.click();
@@ -99,3 +57,18 @@ browserList.forEach(browserDriver =>{
         await driver.quit();
     });
 });
+
+async function CheckLink(n:number, item:string, link:string = item.toLowerCase()){
+    it("checks if "+nOrderStringify(n)+" link (\'"+item+"\') leads to Motor "+item, async ()=>{
+        let menuButton:WebElement = await GetMenuButton(driver, ttl);
+        expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
+
+        let el:WebElement = await menuButton.findElement(By.linkText(item));
+
+        expect(await el.getAttribute("href")).toMatch("/"+link);
+        await el.click();
+
+        await driver.wait(until.elementLocated(By.className("o-section")));
+        expect(await driver.getTitle()).toMatch(item+" | Finansavisen");
+    });
+};

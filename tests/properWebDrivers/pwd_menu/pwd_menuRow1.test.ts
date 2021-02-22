@@ -1,8 +1,9 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByXPath } from "../../../easifier";
+import { buildDriver, buildEdgeDriver } from "../../../easifier";
+import { GetMenuButton } from "../../../helperMenu";
 
 // Starting URL
-const rootURL:string = process.env.MENU || "https://finansavisen.no/";
+const rootURL:string = process.env.MENU;
 // in ms
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
@@ -32,10 +33,8 @@ browserList.forEach(browserDriver =>{
         beforeEach(async ()=>{
             await driver.get(rootURL);
 
-            menuButton = await getElByXPath(driver, ttl, "//div[@class='c-header-bar__toggle-menu']")
+            menuButton = await GetMenuButton(driver, ttl);
             expect(await menuButton.getAttribute("textContent")).toMatch("E-avis");
-            await driver.actions({bridge: true}).move({duration:100, origin:menuButton, x:0, y:0}).perform();
-            await driver.wait(until.elementIsVisible(menuButton.findElement(By.id("menu-content"))));
         });
 
         it("checks if 1st link ('E-avis') leads to subscription page", async ()=>{
