@@ -36,14 +36,16 @@ export async function Next(driver: WebDriver, mainTab: string, browserDriver:str
 };
 
 async function FirefoxFix(driver: WebDriver, browserDriver:string = "firefox"){
-    if(browserDriver==="firefox"){
+    // If network or site or computer or whatever lags or takes too long, tab with hang
+    // Not just FF issue but it's slowest of proper WebDrivers so was made for it
+    // if(browserDriver==="firefox"){
         let tabs = await driver.getAllWindowHandles();
         if(tabs.length>1){
             await driver.switchTo().window(tabs[1]);
             await driver.close();
             await driver.switchTo().window(tabs[0]);
-        }
-    };
+        };
+    // };
 };
 
 export async function closeGDPR(driver:WebDriver, ttl:number){
