@@ -57,7 +57,7 @@ async function CheckLink(n:number, item:string, link:string = item.toLowerCase()
         expect(await el.getAttribute("href")).toMatch("/motor/"+link);
         await el.click();
 
-        await driver.wait(until.elementLocated(By.className("o-section")));
+        await driver.wait(until.elementLocated(By.className("o-section")), ttl);
         expect(await driver.getTitle()).toMatch(item+" - Motor | Finansavisen");
     });
 };

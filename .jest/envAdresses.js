@@ -18,3 +18,9 @@ process.env.MENU = envAddress+"finansavisen.no/";
 process.env.OMS = envAddress+"finansavisen.no/";
 
 process.env.FOOTER = envAddress+"finansavisen.no/";
+
+process.env.CATEGORY_MOTOR = envAddress+"finansavisen.no/motor/";
+process.env.CATEGORY_PODCAST = envAddress+"finansavisen.no/podcast/";
+process.env.CATEGORY_PREMIUM = envAddress+"finansavisen.no/premium/";
+process.env.CATEGORY_VEXT = envAddress+"finansavisen.no/vext/";
+process.env.CATEGORY_LORDAG = envAddress+"finansavisen.no/lordag/";
