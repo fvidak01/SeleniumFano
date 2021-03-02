@@ -27,6 +27,25 @@ export function buildEdgeDriver(){
     }
 }
 
+// Go to old tab
+export async function Next(driver: WebDriver, mainTab: string, browserDriver:string){
+    await driver.close();
+    await driver.switchTo().window(mainTab);
+    FirefoxFix(driver, browserDriver);
+    await driver.navigate().refresh();
+};
+
+async function FirefoxFix(driver: WebDriver, browserDriver:string = "firefox"){
+    if(browserDriver==="firefox"){
+        let tabs = await driver.getAllWindowHandles();
+        if(tabs.length>1){
+            await driver.switchTo().window(tabs[1]);
+            await driver.close();
+            await driver.switchTo().window(tabs[0]);
+        }
+    };
+};
+
 export async function closeGDPR(driver:WebDriver, ttl:number){
     await (await getElByID(driver, ttl, "finansavisen-gdpr-disclamer-close")).click()
         .catch(()=>{
