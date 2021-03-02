@@ -35,6 +35,9 @@ browserList.forEach(browserDriver =>{
         CheckItem(2, "Økonominyhetene", "/okonominyhetene");
         CheckItem(3, "Mil etter mil", "/mil-etter-mil");
         CheckItem(4, "Morgenkaffen");
+        CheckItem(5, "Oppsummert");
+        CheckItem(6, "Veien hit", "/veien-hit");
+        CheckItem(7, "Ukens Vin", "/ukens-vin");
     });
     it("stops "+browserDriver, async ()=>{
         await driver.quit();

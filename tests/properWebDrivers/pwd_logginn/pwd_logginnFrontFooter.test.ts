@@ -17,7 +17,7 @@ let driver:WebDriver;
 // const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
     // Firefox has some psychological issues in logging out and no one in Norway uses it, not worth the time right now
 const browserList:string[] = ["chrome", "MicrosoftEdge"];
-// const browserList:string[] = ["chrome"];
+// const browserList:string[] = ["firefox"];
 
 
 browserList.forEach(browserDriver =>{
@@ -70,8 +70,8 @@ browserList.forEach(browserDriver =>{
 
             await (await getElByPartialLinkText(driver, ttl, "Logg ut")).click();
 
-            let el:WebElement = await getElByXPath(driver, ttl, "//div[@id='js-expand-menu']/div/div/a");
-            expect(await el.getAttribute("textContent")).toMatch("Kjøp");
+            let el:WebElement = await getElByID(driver, ttl, "js-expand-menu");
+            expect(await el.getAttribute("textContent")).toMatch(/Kjøp/);
         });
     });
     

@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, nOrderStringify } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, delay, nOrderStringify } from "../../../easifier";
 import { GetMenuButton } from "../../../helperMenu";
 
 // Starting URL
@@ -105,6 +105,8 @@ async function Next(refreshAfter:boolean, mainTab:string){
     await driver.switchTo().window(mainTab);
 
     if(refreshAfter){
+        if((await driver.getCapabilities()).getBrowserName() === "firefox")
+            await delay(500);
         let tabs = await driver.getAllWindowHandles();
         if(tabs.length>1){
             await driver.switchTo().window(tabs[1]);

@@ -1,13 +1,11 @@
-import { Key, until, WebDriver, WebElement } from "selenium-webdriver";
+import { By, Key, until, WebDriver, WebElement } from "selenium-webdriver";
 import { 
     buildDriver, 
     buildEdgeDriver, 
     closeGDPR,
     getElByClass, 
     getElByID, 
-    getElByPartialLinkText, 
-    getElByXPath 
-} from "../../../easifier";
+    getElByPartialLinkText} from "../../../easifier";
 
 // Starting URL
 const rootURL:string = process.env.LOGIN_ARTICLE;
@@ -23,7 +21,7 @@ let driver:WebDriver;
 
 // Available WebDrivers
 const browserList:string[] = ["firefox", "MicrosoftEdge", "chrome"];
-// const browserList:string[] = ["chrome"];
+// const browserList:string[] = ["firefox"];
 
 
 browserList.forEach(browserDriver =>{
@@ -38,6 +36,8 @@ browserList.forEach(browserDriver =>{
         it("sets up the testing area", async ()=>{
             await driver.get(rootURL);
             expect(await closeGDPR(driver, ttl)).toBeNull();
+            await (await getElByClass(driver, ttl, "c-image-fa")).click();
+            await driver.wait(until.elementLocated(By.className("o-section")), ttl);
         });
 
         it("logs in from article body", async ()=>{
@@ -68,8 +68,8 @@ browserList.forEach(browserDriver =>{
         it("logs out and returns to the frontpage", async ()=>{
             await driver.get("https://finansavisen.no/minside");
             await (await getElByPartialLinkText(driver, ttl, "Logg ut")).click();
-            let el:WebElement = await getElByXPath(driver, ttl, "//div[@id='js-expand-menu']/div/div/a");
-            expect(await el.getAttribute("textContent")).toMatch("Kjøp");
+            let el:WebElement = await getElByID(driver, ttl, "js-expand-menu");
+            expect(await el.getAttribute("textContent")).toMatch(/Kjøp/);
         });
     });
     
