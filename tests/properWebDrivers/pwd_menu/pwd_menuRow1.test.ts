@@ -41,7 +41,7 @@ browserList.forEach(browserDriver =>{
             let el:WebElement = await menuButton.findElement(By.linkText("E-avis"));
             expect(await el.getAttribute("href")).toMatch("/abonnement");
             await el.click();
-            await driver.wait(until.elementLocated(By.id("subscription-offers")));
+            await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
             expect(await driver.getTitle()).toMatch("Abonnement | Finansavisen");
         });
 
@@ -49,7 +49,7 @@ browserList.forEach(browserDriver =>{
             let el:WebElement = await menuButton.findElement(By.linkText("TV"));
             expect(await el.getAttribute("href")).toMatch("/fatv");
             await el.click();
-            await driver.wait(until.elementLocated(By.css("iframe")));
+            await driver.wait(until.elementLocated(By.css("iframe")), ttl);
             expect(await driver.getTitle()).toMatch("FaTV | Finansavisen");
         });
 
@@ -57,7 +57,7 @@ browserList.forEach(browserDriver =>{
             let el:WebElement = await menuButton.findElement(By.linkText("Forum"));
             expect(await el.getAttribute("href")).toMatch("/forum");
             await el.click();
-            await driver.wait(until.elementLocated(By.id("container-top")));
+            await driver.wait(until.elementLocated(By.id("container-top")), ttl);
             expect(await driver.getTitle()).toMatch("Finansavisen Forum");
         });
 
@@ -67,7 +67,7 @@ browserList.forEach(browserDriver =>{
             await el.click();
             let tabs = await driver.getAllWindowHandles();
             await driver.switchTo().window(tabs[1]);
-            await driver.wait(until.elementLocated(By.id("root")));
+            await driver.wait(until.elementLocated(By.id("root")), ttl);
             expect(await driver.getTitle()).toMatch("Finansavisen");
         });
     });

@@ -11,7 +11,7 @@ let driver:WebDriver;
 
 //
 // Heavy TODO task. Currently have no more ideas to try to actually test if searching for any and all tickers load proper pages.
-// Testing OMS subheader Search, it only tests if 299 tickers are loaded
+// Testing OMS subheader Search, it only tests if 303 tickers are loaded
 //
 
 // Available WebDrivers
@@ -48,7 +48,7 @@ browserList.forEach(browserDriver =>{
         });
 
         it("checks amount of tickers ", async ()=>{
-            expect(tickers.length).toBe(299);
+            expect(tickers.length).toBe(303);
         });
         
         // it("checks if 1st ticker ('2020') leads to correct page", async ()=>{

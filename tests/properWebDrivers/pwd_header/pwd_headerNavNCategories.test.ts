@@ -34,47 +34,7 @@ browserList.forEach(browserDriver =>{
         CheckNumber("Nyheter", 2, 10);
         CheckNumber("Premium", 6, 4);
         CheckNumber("Motor", 7, 7);
-        CheckNumber("Podcast", 8, 4);
-
-        // it("checks number of Nyheter categories", async ()=>{
-        //     let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[2]")
-        //     expect(await category.getAttribute("textContent")).toMatch("Nyheter");
-        //     await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-            
-        //     await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")), ttl);
-        //     let els:WebElement[] = await category.findElements(By.css("li"));
-        //     expect(els.length).toBe(10);
-        // });
-
-        // it("checks number of Premium categories", async ()=>{
-        //     let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[6]")
-        //     expect(await category.getAttribute("textContent")).toMatch("Premium");
-        //     await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-            
-        //     await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")), ttl);
-        //     let els:WebElement[] = await category.findElements(By.css("li"));
-        //     expect(els.length).toBe(4);
-        // });
-
-        // it("checks number of Motor categories", async ()=>{
-        //     let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[7]")
-        //     expect(await category.getAttribute("textContent")).toMatch("Motor");
-        //     await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-            
-        //     await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")), ttl);
-        //     let els:WebElement[] = await category.findElements(By.css("li"));
-        //     expect(els.length).toBe(7);
-        // });
-
-        // it("checks number of Podcast categories", async ()=>{
-        //     let category:WebElement = await getElByXPath(driver, ttl, "//ul[@class='c-header-bar-nav__list']/li[8]")
-        //     expect(await category.getAttribute("textContent")).toMatch("Podcast");
-        //     await driver.actions({bridge: true}).move({duration:100, origin:category, x:0, y:0}).perform();
-            
-        //     await driver.wait(until.elementLocated(By.className("c-header-bar-nav__small-menu__content")), ttl);
-        //     let els:WebElement[] = await category.findElements(By.css("li"));
-        //     expect(els.length).toBe(4);
-        // });
+        CheckNumber("Podcast", 8, 7);
     });
     
     it("stops "+browserDriver, async ()=>{

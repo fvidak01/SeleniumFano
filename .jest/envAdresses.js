@@ -1,7 +1,7 @@
 envAddress = "https://";
 
-process.env.LOGIN = envAddress;
-process.env.LOGIN_ARTICLE = envAddress+"finansavisen.no/7622333/";
+process.env.LOGIN = envAddress+"finansavisen.no/";
+process.env.LOGIN_ARTICLE = envAddress+"finansavisen.no/fa/";
 
 process.env.SUB_OFFERS = envAddress+"finansavisen.no/abonnement";
 process.env.SUB_FORM = envAddress+"finansavisen.no/abonnement/post-launch";
