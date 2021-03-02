@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByID, getElByXPath, nOrderStringify } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, getElByID, getElByXPath, Next, nOrderStringify } from "../../../easifier";
 
 // Starting URL
 const rootURL:string = process.env.FOOTER;
@@ -15,7 +15,7 @@ let driver:WebDriver;
 
 // Available WebDrivers
 const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
-// const browserList:string[] = ["chrome"];
+// const browserList:string[] = ["firefox"];
 
 
 browserList.forEach(browserDriver =>{
@@ -40,39 +40,58 @@ browserList.forEach(browserDriver =>{
             expect(footerNavLinks.length).toBe(9);
         });
 
+        it("checks 1st nav link", async ()=>{
+            expect(await footerNavLinks[0].getAttribute("href")).toMatch("/abonnement");
+            await footerNavLinks[0].click();
+            await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
+            expect(await driver.getTitle()).toMatch("Abonnement | Finansavisen");
+        });
+
         it("checks 2nd nav link", async ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[2]");
             expect(await el.getAttribute("href")).toMatch("https://annonseweb.finansavisen.no");
-            expect(await el.getAttribute("textContent")).toMatch("Annonse");
+            await el.click();
+    
+            let tabs = await driver.getAllWindowHandles();
+            await driver.switchTo().window(tabs[1]);
+
+            await driver.wait(until.elementLocated(By.id("__nuxt")));
+            expect(await driver.getTitle()).toMatch("Advertise");
+
+            await Next(driver, tabs[0], browserDriver);
         });
+        
+        CheckLink(3, "Arkiv");
+        CheckLink(4, "Personvern");
+        CheckLink(5, "Cookies");
+        CheckLink(6, "Vilkår", "/vilkar");
+        CheckLink(9, "Om oss", "/om-oss");
 
         it("checks 7th nav link", async ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[7]");
             expect(await el.getAttribute("href")).toMatch("https://kapital.no/");
-            expect(await el.getAttribute("textContent")).toMatch("Kapital");
+            await el.click();
+    
+            let tabs = await driver.getAllWindowHandles();
+            await driver.switchTo().window(tabs[1]);
+
+            await driver.wait(until.elementLocated(By.className("o-layout")));
+            expect(await driver.getTitle()).toMatch("Kapital");
+
+            await Next(driver, tabs[0], browserDriver);
         });
 
         it("checks 8th nav link", async ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[8]");
             expect(await el.getAttribute("href")).toMatch("http://www.abcnyheter.no");
-            expect(await el.getAttribute("textContent")).toMatch("ABC Nyheter");
-        });
+            await el.click();
+    
+            let tabs = await driver.getAllWindowHandles();
+            await driver.switchTo().window(tabs[1]);
 
-        describe("Testing links whose target isn't _blank", ()=>{
-            it("checks 1st nav link", async ()=>{
-                expect(await footerNavLinks[0].getAttribute("href")).toMatch("/abonnement");
-                await footerNavLinks[0].click();
-                await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
-                expect(await driver.getTitle()).toMatch("Abonnement | Finansavisen");
-            });
-            
-            CheckLink(3, "Arkiv");
-            CheckLink(4, "Personvern");
-            CheckLink(5, "Cookies");
-            CheckLink(6, "Vilkår", "/vilkar");
-            CheckLink(9, "Om oss", "/om-oss");
+            await driver.wait(until.elementLocated(By.className("o-section")));
+            expect(await driver.getTitle()).toMatch("ABC Nyheter");
         });
-        
     });
     
     it("stops "+browserDriver, async ()=>{
