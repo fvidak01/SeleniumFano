@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, getElByID, getElByXPath, Next, nOrderStringify } from "../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, getElByXPath, nOrderStringify } from "../../../../easifier";
 
 // Starting URL
 const rootURL:string = process.env.SISTENYTT;
@@ -47,7 +47,7 @@ async function CheckItem(n:number){
         let item:WebElement = await getElByXPath(driver, ttl, "//div[@id='latest-articles-desktop']/div[2]/div/a["+n+"]");
         await item.click();
 
-        await driver.wait(until.elementLocated(By.className("o-layout")));
+        await driver.wait(until.elementLocated(By.className("lazyautosizes lazyloaded")), ttl);
         expect(await driver.getTitle()).not.toMatch(/404: Not Found/);
 
         await driver.navigate().back();

@@ -46,6 +46,12 @@ browserList.forEach(browserDriver =>{
             await driver.wait(until.elementLocated(By.id("subscription-offers")), ttl);
             expect(await driver.getTitle()).toMatch("Abonnement | Finansavisen");
         });
+        
+        CheckLink(3, "Arkiv");
+        CheckLink(4, "Personvern");
+        CheckLink(5, "Cookies");
+        CheckLink(6, "Vilkår", "/vilkar");
+        CheckLink(9, "Om oss", "/om-oss");
 
         it("checks 2nd nav link", async ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[2]");
@@ -56,16 +62,10 @@ browserList.forEach(browserDriver =>{
             await driver.switchTo().window(tabs[1]);
 
             await driver.wait(until.elementLocated(By.id("__nuxt")));
-            expect(await driver.getTitle()).toMatch("Advertise");
+            expect(await driver.getCurrentUrl()).toMatch("annonseweb.finansavisen.no");
 
             await Next(driver, tabs[0], browserDriver);
         });
-        
-        CheckLink(3, "Arkiv");
-        CheckLink(4, "Personvern");
-        CheckLink(5, "Cookies");
-        CheckLink(6, "Vilkår", "/vilkar");
-        CheckLink(9, "Om oss", "/om-oss");
 
         it("checks 7th nav link", async ()=>{
             let el:WebElement = await getElByXPath(driver, ttl, "//nav[@id='footer']/a[7]");
