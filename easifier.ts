@@ -38,6 +38,10 @@ export async function Next(driver: WebDriver, mainTab: string, browserDriver:str
 async function FirefoxFix(driver: WebDriver, browserDriver:string = "firefox"){
     // If network or site or computer or whatever lags or takes too long, tab with hang
     // Not just FF issue but it's slowest of proper WebDrivers so was made for it
+    if(browserDriver==="firefox"){
+        await delay(1000);
+    };
+
     // if(browserDriver==="firefox"){
         let tabs = await driver.getAllWindowHandles();
         if(tabs.length>1){
@@ -60,6 +64,8 @@ export async function closeGDPR(driver:WebDriver, ttl:number){
 export function delay(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
+
+
 
 
 // Get element by

@@ -26,3 +26,10 @@ process.env.CATEGORY_VEXT = envAddress+"finansavisen.no/vext/";
 process.env.CATEGORY_LORDAG = envAddress+"finansavisen.no/lordag/";
 
 process.env.SISTENYTT = envAddress+"finansavisen.no";
+
+process.env.MOTOR_NYHETER = envAddress+"finansavisen.no/motor/nyheter";
+process.env.MOTOR_BILTESTER = envAddress+"finansavisen.no/motor/biltester";
+process.env.MOTOR_BAT = envAddress+"finansavisen.no/motor/bat";
+process.env.MOTOR_REPORTASJER = envAddress+"finansavisen.no/motor/reportasjer";
+process.env.MOTOR_KLASSISKE = envAddress+"finansavisen.no/motor/klassiske-biler";
+process.env.MOTOR_GADGETS = envAddress+"finansavisen.no/motor/gadgets";
