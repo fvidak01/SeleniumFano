@@ -34,22 +34,36 @@ export function Sve(rootURL:string){
                 expect(await closeGDPR(driver, ttl)).toBeNull();
             });
 
-            for(let i = 0; i < 3; i++)
-                (async ()=>{
-                    await CheckSection(i, "Top3");
-                })();
-
-            // Premium Kunst has only 3 articles (2021/4/3)
-            if (rootURL != process.env.PREMIUM_KUNST){
-                for(let i = 0; i < 6; i++)
+            // Motor Design og Teknikk has no articles (2021/3/4)
+            if(rootURL != process.env.MOTOR_DESIGNOGTEKNIKK)
+            {
+                for(let i = 0; i < 3; i++)
                     (async ()=>{
-                        await CheckSection(i, "Mid6");
+                        await CheckSection(i, "Top3");
                     })();
 
-                for(let i = 0; i < 4; i++)
-                    (async ()=>{
-                        await CheckSection(i, "Bot4");
-                    })();
+                // Premium Kunst has only 3 articles (2021/3/4)
+                if (rootURL != process.env.PREMIUM_KUNST){
+                    // Vext Tech has only 3+2 articles (2021/3/4)
+                    if (rootURL === process.env.VEXT_TECH){
+                        for(let i = 0; i < 2; i++)
+                            (async ()=>{
+                                await CheckSection(i, "Mid6");
+                            })();
+                    }
+                    // Subcategories with more than 3+6+3 articles (2021/3/4)
+                    else {
+                        for(let i = 0; i < 6; i++)
+                            (async ()=>{
+                                await CheckSection(i, "Mid6");
+                            })();
+
+                        for(let i = 0; i < 4; i++)
+                            (async ()=>{
+                                await CheckSection(i, "Bot4");
+                            })();
+                    };
+                };
             };
             
             (async ()=>{

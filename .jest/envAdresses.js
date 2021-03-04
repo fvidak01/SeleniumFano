@@ -33,6 +33,7 @@ process.env.MOTOR_BAT = envAddress+"finansavisen.no/motor/bat";
 process.env.MOTOR_REPORTASJER = envAddress+"finansavisen.no/motor/reportasjer";
 process.env.MOTOR_KLASSISKE = envAddress+"finansavisen.no/motor/klassiske-biler";
 process.env.MOTOR_GADGETS = envAddress+"finansavisen.no/motor/gadgets";
+process.env.MOTOR_DESIGNOGTEKNIKK = envAddress+"finansavisen.no/motor/design-og-teknikk";
 
 process.env.PREMIUM_LUNSJGUIDEN = envAddress+"finansavisen.no/premium/lunsjguiden";
 process.env.PREMIUM_KLOKKER = envAddress+"finansavisen.no/premium/klokker";
@@ -44,3 +45,6 @@ process.env.PREMIUM_VIN = envAddress+"finansavisen.no/premium/vin";
 process.env.PREMIUM_KULTUR = envAddress+"finansavisen.no/premium/kultur";
 process.env.PREMIUM_MOTE = envAddress+"finansavisen.no/premium/mote";
 process.env.PREMIUM_OPPLEVELSE = envAddress+"finansavisen.no/premium/opplevelse";
+
+process.env.VEXT_GRUNDER = envAddress+"finansavisen.no/vext/grunder";
+process.env.VEXT_TECH = envAddress+"finansavisen.no/vext/tech";
