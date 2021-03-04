@@ -19,13 +19,13 @@ process.env.OMS = envAddress+"finansavisen.no/";
 
 process.env.FOOTER = envAddress+"finansavisen.no/";
 
+process.env.SISTENYTT = envAddress+"finansavisen.no";
+
 process.env.CATEGORY_MOTOR = envAddress+"finansavisen.no/motor/";
 process.env.CATEGORY_PODCAST = envAddress+"finansavisen.no/podcast/";
 process.env.CATEGORY_PREMIUM = envAddress+"finansavisen.no/premium/";
 process.env.CATEGORY_VEXT = envAddress+"finansavisen.no/vext/";
 process.env.CATEGORY_LORDAG = envAddress+"finansavisen.no/lordag/";
-
-process.env.SISTENYTT = envAddress+"finansavisen.no";
 
 process.env.MOTOR_NYHETER = envAddress+"finansavisen.no/motor/nyheter";
 process.env.MOTOR_BILTESTER = envAddress+"finansavisen.no/motor/biltester";
@@ -33,3 +33,14 @@ process.env.MOTOR_BAT = envAddress+"finansavisen.no/motor/bat";
 process.env.MOTOR_REPORTASJER = envAddress+"finansavisen.no/motor/reportasjer";
 process.env.MOTOR_KLASSISKE = envAddress+"finansavisen.no/motor/klassiske-biler";
 process.env.MOTOR_GADGETS = envAddress+"finansavisen.no/motor/gadgets";
+
+process.env.PREMIUM_LUNSJGUIDEN = envAddress+"finansavisen.no/premium/lunsjguiden";
+process.env.PREMIUM_KLOKKER = envAddress+"finansavisen.no/premium/klokker";
+process.env.PREMIUM_MATDRIKKE = envAddress+"finansavisen.no/premium/mat-og-drikke";
+process.env.PREMIUM_SPORTFRITID = envAddress+"finansavisen.no/premium/sport-og-fritid";
+process.env.PREMIUM_DESIGN = envAddress+"finansavisen.no/premium/design";
+process.env.PREMIUM_KUNST = envAddress+"finansavisen.no/premium/kunst";
+process.env.PREMIUM_VIN = envAddress+"finansavisen.no/premium/vin";
+process.env.PREMIUM_KULTUR = envAddress+"finansavisen.no/premium/kultur";
+process.env.PREMIUM_MOTE = envAddress+"finansavisen.no/premium/mote";
+process.env.PREMIUM_OPPLEVELSE = envAddress+"finansavisen.no/premium/opplevelse";

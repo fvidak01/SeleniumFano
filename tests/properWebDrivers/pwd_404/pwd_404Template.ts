@@ -1,5 +1,5 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
-import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByClass, getElByID, nOrderStringify } from "../../../../easifier";
+import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByClass, getElByID, nOrderStringify } from "../../../easifier";
 
 
 export function Sve(rootURL:string){
@@ -12,7 +12,7 @@ export function Sve(rootURL:string){
     let driver:WebDriver;
 
     //
-    // Testing Motor subcategories' articles for 404
+    // Testing subcategories' articles for 404
     //
 
     // Available WebDrivers
@@ -39,16 +39,19 @@ export function Sve(rootURL:string){
                     await CheckSection(i, "Top3");
                 })();
 
-            for(let i = 0; i < 6; i++)
-                (async ()=>{
-                    await CheckSection(i, "Mid6");
-                })();
+            // Premium Kunst has only 3 articles (2021/4/3)
+            if (rootURL != process.env.PREMIUM_KUNST){
+                for(let i = 0; i < 6; i++)
+                    (async ()=>{
+                        await CheckSection(i, "Mid6");
+                    })();
 
-            for(let i = 0; i < 4; i++)
-                (async ()=>{
-                    await CheckSection(i, "Bot4");
-                })();
-
+                for(let i = 0; i < 4; i++)
+                    (async ()=>{
+                        await CheckSection(i, "Bot4");
+                    })();
+            };
+            
             (async ()=>{
                 await CheckAgendaNumbers("top");
             })();
@@ -81,6 +84,7 @@ export function Sve(rootURL:string){
             // Not gonna test all in that section, just 1st 4
             case "Bot4":
                 classIdentifier = "u-x1of1 u-x2of3-medium";
+                // Motor Gadgets has only 3+6+4 articles (2021/3/4)
                 if(rootURL === process.env.MOTOR_GADGETS)
                     expected = 4;
                 else
