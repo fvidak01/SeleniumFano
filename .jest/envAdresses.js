@@ -48,3 +48,9 @@ process.env.PREMIUM_OPPLEVELSE = envAddress+"finansavisen.no/premium/opplevelse"
 
 process.env.VEXT_GRUNDER = envAddress+"finansavisen.no/vext/grunder";
 process.env.VEXT_TECH = envAddress+"finansavisen.no/vext/tech";
+
+process.env.LORDAG_GRUNDERINTERVJUET = envAddress+"finansavisen.no/lordag/grunderintervjuet";
+process.env.LORDAG_PROFIL = envAddress+"finansavisen.no/lordag/profil";
+process.env.LORDAG_REPORTASJE = envAddress+"finansavisen.no/lordag/reportasje";
+process.env.LORDAG_UKENSSELSKAP = envAddress+"finansavisen.no/lordag/ukensselskap";
+process.env.LORDAG_BOKANMELDELSER = envAddress+"finansavisen.no/lordag/bokanmeldelser";

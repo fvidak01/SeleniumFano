@@ -1,7 +1,7 @@
 import { By, until, WebDriver, WebElement } from "selenium-webdriver";
 import { buildDriver, buildEdgeDriver, closeGDPR, delay, getElByClass, getElByID, nOrderStringify } from "../../../easifier";
 
-
+// All Subcategories have same basic template so this work for all (sve) of them
 export function Sve(rootURL:string){
     // Starting URL
     // const rootURL:string = process.env.MOTOR_NYHETER;
