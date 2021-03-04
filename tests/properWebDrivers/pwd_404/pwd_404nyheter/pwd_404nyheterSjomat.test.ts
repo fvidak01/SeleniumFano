@@ -1,3 +1,3 @@
 import { Sve } from "../pwd_404Template";
 
-Sve(process.env.MOTOR_KLASSISKE);
+Sve(process.env.NYHETER_SJOMAT);
