@@ -1,3 +1,3 @@
 import { Sve } from "../pwd_404Template";
 
-Sve(process.env.CATEGEORY_VEXT);
+Sve(process.env.CATEGORY_VEXT);
