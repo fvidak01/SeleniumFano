@@ -16,8 +16,8 @@ export function Sve(rootURL:string){
     //
 
     // Available WebDrivers
-    const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome"];
-    // const browserList:string[] = ["chrome"];
+    // const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome"];
+    const browserList:string[] = ["chrome"];
 
 
     browserList.forEach(browserDriver =>{
