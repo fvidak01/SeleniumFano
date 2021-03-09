@@ -16,6 +16,7 @@ process.env.HEADER = envAddress + "finansavisen.no/";
 process.env.MENU = envAddress + "finansavisen.no/";
 
 process.env.OMS = envAddress + "finansavisen.no/";
+process.env.BORS = "https://bors.finansavisen.no/NO/kursliste";
 
 process.env.FOOTER = envAddress + "finansavisen.no/";
 
