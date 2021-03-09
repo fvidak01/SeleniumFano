@@ -92,3 +92,5 @@ process.env.NYHETER_SHIPPING = envAddress + "finansavisen.no/nyheter/shipping";
 process.env.NYHETER_SJOMAT = envAddress + "finansavisen.no/nyheter/sjomat";
 process.env.NYHETER_TRANSPORT = envAddress + "finansavisen.no/nyheter/transport";
 process.env.NYHETER_UTENRIKS = envAddress + "finansavisen.no/nyheter/utenriks";
+
+process.env.AGENDA_FRONTPAGE = envAddress + "finansavisen.no/";
