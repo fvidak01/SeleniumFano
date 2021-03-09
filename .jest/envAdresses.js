@@ -16,6 +16,7 @@ process.env.HEADER = envAddress + "finansavisen.no/";
 process.env.MENU = envAddress + "finansavisen.no/";
 
 process.env.OMS = envAddress + "finansavisen.no/";
+process.env.BORS = "https://bors.finansavisen.no/NO/kursliste";
 
 process.env.FOOTER = envAddress + "finansavisen.no/";
 
@@ -92,3 +93,5 @@ process.env.NYHETER_SHIPPING = envAddress + "finansavisen.no/nyheter/shipping";
 process.env.NYHETER_SJOMAT = envAddress + "finansavisen.no/nyheter/sjomat";
 process.env.NYHETER_TRANSPORT = envAddress + "finansavisen.no/nyheter/transport";
 process.env.NYHETER_UTENRIKS = envAddress + "finansavisen.no/nyheter/utenriks";
+
+process.env.AGENDA_FRONTPAGE = envAddress + "finansavisen.no/";
