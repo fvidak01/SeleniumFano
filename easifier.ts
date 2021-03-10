@@ -4,7 +4,7 @@ const edge = require('selenium-webdriver/edge');
 let edgeOptions = new edge.Options();
 edgeOptions.setEdgeChromium(true);
 
-export function buildDriver(browser:string){
+export function buildDriver(browser: string){
     try{
         return new Builder().forBrowser(browser).build();
     }
@@ -28,14 +28,14 @@ export function buildEdgeDriver(){
 }
 
 // Go to old tab
-export async function Next(driver: WebDriver, mainTab: string, browserDriver:string){
+export async function Next(driver: WebDriver, mainTab: string, browserDriver: string){
     await driver.close();
     await driver.switchTo().window(mainTab);
     FirefoxFix(driver, browserDriver);
     await driver.navigate().refresh();
 };
 
-async function FirefoxFix(driver: WebDriver, browserDriver:string = "firefox"){
+async function FirefoxFix(driver: WebDriver, browserDriver: string = "firefox"){
     // If network or site or computer or whatever lags or takes too long, tab with hang
     // Not just FF issue but it's slowest of proper WebDrivers so was made for it
     if(browserDriver==="firefox"){
@@ -52,20 +52,34 @@ async function FirefoxFix(driver: WebDriver, browserDriver:string = "firefox"){
     // };
 };
 
-export async function closeGDPR(driver:WebDriver, ttl:number){
-    await (await getElByID(driver, ttl, "finansavisen-gdpr-disclamer-close")).click()
-        .catch(()=>{
-            console.log("Failed to close GDPR notice.");
-            return null;
-        });
+
+export async function closeGDPR(driver: WebDriver, ttl: number){
+    await (
+        await driver.wait(until.elementLocated(By.id("finansavisen-gdpr-disclamer-close")), ttl)
+    ).click()
+    .catch(()=>{
+        console.log("Failed to close GDPR notice.")
+        return null;
+    });
     return null;
 };
 
-export function delay(ms:number) {
+
+export function delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 
+// Get 1st, 2nd, 3rd, 4th... from 1, 2, 3, 4...
+export function nOrderStringify(n: number):string{
+    if (n%100 === 11 || n%100 === 12 || n%100 === 13) return n+"th";
+    switch (n%10){
+        case 1: return n+"st";
+        case 2: return n+"nd";
+        case 3: return n+"rd";
+        default: return n+"th";
+    }
+};
 
 
 // Get element by
@@ -92,15 +106,4 @@ export async function getElByClass(driver:WebDriver, ttl:number, text:string){
 export async function getElByCss(driver:WebDriver, ttl:number, text:string){
     const _el:WebElement = await driver.wait(until.elementLocated(By.css(text)), ttl);
     return _el;
-};
-
-// Get 1st, 2nd, 3rd, 4th... from 1, 2, 3, 4...
-export function nOrderStringify(n:number):string{
-    if (n%100 === 11 || n%100 === 12 || n%100 === 13) return n+"th";
-    switch (n%10){
-        case 1: return n+"st";
-        case 2: return n+"nd";
-        case 3: return n+"rd";
-        default: return n+"th";
-    }
 };
