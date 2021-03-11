@@ -2,9 +2,9 @@ import { By, until, WebDriver, WebElement } from "selenium-webdriver";
 import { buildDriver, buildEdgeDriver, closeGDPR } from "../../../easifier";
 
 // Starting URL
-const rootURL:string =  process.env.AGENDA_FRONTPAGE;
+const rootURL: string =  process.env.AGENDA_FRONTPAGE;
 // in ms
-const ttl:number = 15000;
+const ttl: number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 
 //
@@ -12,14 +12,14 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 //
 
 // Available WebDrivers
-const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome"];
+const browserList: string[] = ["MicrosoftEdge", "firefox", "chrome"];
 // const browserList:string[] = ["firefox"];
 
 
 browserList.forEach(browserDriver =>{
-    let driver:WebDriver;
-
     describe((browserDriver+" tests").toUpperCase(), ()=>{
+        let driver: WebDriver;
+    
         it("sets up the testing area", async ()=>{
             if(browserDriver !== "MicrosoftEdge")
                 driver = await buildDriver(browserDriver);
@@ -31,21 +31,31 @@ browserList.forEach(browserDriver =>{
             expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
-        CheckAgendaSection("frontpage-top", 4);
-        CheckAgendaSection("frontpage-middle", 2);
-        CheckAgendaSection("frontpage-bottom", 2);
+        const topAgendaID = "frontpage-top";
+        it("checks how many agenda articles are in " + topAgendaID + " section on frontpage", async ()=>{
+            const receivedAgendaCount: number = await CheckAgendaSection(driver, topAgendaID)
+            expect(receivedAgendaCount).toBe(4);
+        });
+
+        const middleAgendaID = "frontpage-middle";
+        it("checks how many agenda articles are in "+middleAgendaID+" section on frontpage", async ()=>{
+            const receivedAgendaCount: number = await CheckAgendaSection(driver, middleAgendaID)
+            expect(receivedAgendaCount).toBe(2);
+        });
+
+        const bottomAgendaID = "frontpage-bottom";
+        it("checks how many agenda articles are in "+bottomAgendaID+" section on frontpage", async ()=>{
+            const receivedAgendaCount: number = await CheckAgendaSection(driver, bottomAgendaID)
+            expect(receivedAgendaCount).toBe(2);
+        });
     
         it("stops "+browserDriver, async ()=>{
             await driver.quit();
         });
     });
-
-
-    function CheckAgendaSection(sectionID: string, expectedArticleCount: number){
-        it("checks how many agenda articles are in "+sectionID+" section on frontpage", async ()=>{
-            let section: WebElement = await driver.wait(until.elementLocated(By.id(sectionID)), ttl);
-            let actualArticleCount: number = (await section.findElements(By.css("article"))).length;
-            expect(actualArticleCount).toBe(expectedArticleCount);
-        })
-    };
 });
+
+async function CheckAgendaSection(driver: WebDriver, sectionID: string): Promise<number>{
+    const section: WebElement = await driver.wait(until.elementLocated(By.id(sectionID)), ttl);
+    return (await section.findElements(By.css("article"))).length;
+};
