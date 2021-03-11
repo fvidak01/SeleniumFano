@@ -7,8 +7,6 @@ const rootURL:string = process.env.CATEGORY_VEXT;
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 
-let driver:WebDriver;
-
 //
 // Testing Motor category subcategories
 //
@@ -19,15 +17,16 @@ const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome"];
 
 
 browserList.forEach(browserDriver =>{
-    it("waits for "+browserDriver+" to start", async ()=>{
-        if(browserDriver!="MicrosoftEdge")
-            driver = await buildDriver(browserDriver);
-        else
-            driver = await buildEdgeDriver();
-    });
+    let driver:WebDriver;
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
         it("sets up the testing area", async ()=>{
+            if(browserDriver !== "MicrosoftEdge")
+                driver = await buildDriver(browserDriver);
+            else
+                driver = await buildEdgeDriver();
+            expect(driver).not.toBeNull();
+
             await driver.get(rootURL);
         });
 
@@ -46,28 +45,29 @@ browserList.forEach(browserDriver =>{
         CheckLink(1, "Gründer", "grunder");
         CheckLink(2, "Tech");
         CheckLink(3, "TV-serie", "tv-serie", "p6NC9iHpT", "Vext - vi kårer årets vekstselskap");
-    });
     
-    it("stops "+browserDriver, async ()=>{
-        await driver.quit();
-    });
-});
-
-async function CheckLink(
-    n:number, 
-    item:string, 
-    link:string = item.toLowerCase(), 
-    eleClassName:string = "o-layout",
-    matchTitle: string = item+" - Vext | Finansavisen"){
-
-        it("checks if "+nOrderStringify(n)+" link (\'"+item+"\') leads to Vext "+item, async ()=>{
-            let subcategory:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-subheader__content']/div/div["+n+"]/a")
-            expect(await subcategory.getAttribute("textContent")).toMatch(item);
-
-            expect(await subcategory.getAttribute("href")).toMatch("/vext/"+link);
-            await subcategory.click();
-
-            await driver.wait(until.elementLocated(By.className(eleClassName)), ttl);
-            expect(await driver.getTitle()).toMatch(matchTitle);
+        it("stops "+browserDriver, async ()=>{
+            await driver.quit();
         });
-};
+    });
+
+
+    async function CheckLink(
+        n:number, 
+        item:string, 
+        link:string = item.toLowerCase(), 
+        eleClassName:string = "o-layout",
+        matchTitle: string = item+" - Vext | Finansavisen"){
+
+            it("checks if "+nOrderStringify(n)+" link (\'"+item+"\') leads to Vext "+item, async ()=>{
+                let subcategory:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-subheader__content']/div/div["+n+"]/a")
+                expect(await subcategory.getAttribute("textContent")).toMatch(item);
+
+                expect(await subcategory.getAttribute("href")).toMatch("/vext/"+link);
+                await subcategory.click();
+
+                await driver.wait(until.elementLocated(By.className(eleClassName)), ttl);
+                expect(await driver.getTitle()).toMatch(matchTitle);
+            });
+    };
+});

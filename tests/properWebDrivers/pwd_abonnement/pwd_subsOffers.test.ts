@@ -11,23 +11,21 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
 // const browserList:string[] = ["firefox"];
 
-let driver:WebDriver;
-
 // 
 // Testing if Subscription offers go to respective plans
 // 
 
 browserList.forEach(browserDriver =>{
-    it("waits for "+browserDriver+" to start", async ()=>{
-        if(browserDriver!="MicrosoftEdge")
-            driver = await buildDriver(browserDriver);
-        else
-            driver = await buildEdgeDriver();
-    });
+    let driver:WebDriver;
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
-        
         it("sets up the testing area", async ()=>{
+            if(browserDriver !== "MicrosoftEdge")
+                driver = await buildDriver(browserDriver);
+            else
+                driver = await buildEdgeDriver();
+            expect(driver).not.toBeNull();
+
             await driver.get(rootURL);
             expect(await closeGDPR(driver, ttl)).toBeNull();
         });
@@ -122,9 +120,9 @@ browserList.forEach(browserDriver =>{
             await driver.wait(until.elementLocated(By.id("modal-container")), ttl);
             expect(await driver.getCurrentUrl()).toMatch("id434568179");
         });
-    });
 
-    it("stops "+browserDriver, async ()=>{
-        await driver.quit();
+        it("stops "+browserDriver, async ()=>{
+            await driver.quit();
+        });
     });
 });

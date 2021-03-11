@@ -7,8 +7,6 @@ const rootURL:string = process.env.CATEGORY_LORDAG;
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 
-let driver:WebDriver;
-
 //
 // Testing Lordag category subcategories
 //
@@ -19,15 +17,16 @@ const browserList:string[] = ["MicrosoftEdge", "firefox", "chrome"];
 
 
 browserList.forEach(browserDriver =>{
-    it("waits for "+browserDriver+" to start", async ()=>{
-        if(browserDriver!="MicrosoftEdge")
-            driver = await buildDriver(browserDriver);
-        else
-            driver = await buildEdgeDriver();
-    });
+    let driver:WebDriver;
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
         it("sets up the testing area", async ()=>{
+            if(browserDriver !== "MicrosoftEdge")
+                driver = await buildDriver(browserDriver);
+            else
+                driver = await buildEdgeDriver();
+            expect(driver).not.toBeNull();
+
             await driver.get(rootURL);
         });
 
@@ -48,22 +47,23 @@ browserList.forEach(browserDriver =>{
         CheckLink(3, "Reportasje");
         CheckLink(4, "Ukens selskap", "ukens-selskap");
         CheckLink(5, "Bokanmeldelser");
-    });
     
-    it("stops "+browserDriver, async ()=>{
-        await driver.quit();
+        it("stops "+browserDriver, async ()=>{
+            await driver.quit();
+        });
     });
+
+    
+    async function CheckLink(n:number, item:string, link:string = item.toLowerCase()){
+        it("checks if "+nOrderStringify(n)+" link (\'"+item+"\') leads to Lørdag "+item, async ()=>{
+            let subcategory:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-subheader__content']/div/div["+n+"]/a")
+            expect(await subcategory.getAttribute("textContent")).toMatch(item);
+    
+            expect(await subcategory.getAttribute("href")).toMatch("/lordag/"+link);
+            await subcategory.click();
+    
+            await driver.wait(until.elementLocated(By.className("o-layout")), ttl);
+            expect(await driver.getTitle()).toMatch(item+" - Lørdag | Finansavisen");
+        });
+    };
 });
-
-async function CheckLink(n:number, item:string, link:string = item.toLowerCase()){
-    it("checks if "+nOrderStringify(n)+" link (\'"+item+"\') leads to Lørdag "+item, async ()=>{
-        let subcategory:WebElement = await getElByXPath(driver, ttl, "//div[@class='c-subheader__content']/div/div["+n+"]/a")
-        expect(await subcategory.getAttribute("textContent")).toMatch(item);
-
-        expect(await subcategory.getAttribute("href")).toMatch("/lordag/"+link);
-        await subcategory.click();
-
-        await driver.wait(until.elementLocated(By.className("o-layout")), ttl);
-        expect(await driver.getTitle()).toMatch(item+" - Lørdag | Finansavisen");
-    });
-};
