@@ -16,9 +16,9 @@ const browserList:string[] = ["chrome", "firefox", "MicrosoftEdge"];
 // 
 
 browserList.forEach(browserDriver =>{
-    let driver:WebDriver;
-
     describe((browserDriver+" tests").toUpperCase(), ()=>{
+        let driver:WebDriver;
+    
         it("sets up the testing area", async ()=>{
             if(browserDriver !== "MicrosoftEdge")
                 driver = await buildDriver(browserDriver);

@@ -31,19 +31,19 @@ browserList.forEach(browserDriver =>{
             expect(await closeGDPR(driver, ttl)).toBeNull();
         });
 
-        const topAgendaID = "frontpage-top";
+        const topAgendaID: string = "frontpage-top";
         it("checks how many agenda articles are in " + topAgendaID + " section on frontpage", async ()=>{
             const receivedAgendaCount: number = await CheckAgendaSection(driver, topAgendaID)
             expect(receivedAgendaCount).toBe(4);
         });
 
-        const middleAgendaID = "frontpage-middle";
+        const middleAgendaID: string = "frontpage-middle";
         it("checks how many agenda articles are in "+middleAgendaID+" section on frontpage", async ()=>{
             const receivedAgendaCount: number = await CheckAgendaSection(driver, middleAgendaID)
             expect(receivedAgendaCount).toBe(2);
         });
 
-        const bottomAgendaID = "frontpage-bottom";
+        const bottomAgendaID: string = "frontpage-bottom";
         it("checks how many agenda articles are in "+bottomAgendaID+" section on frontpage", async ()=>{
             const receivedAgendaCount: number = await CheckAgendaSection(driver, bottomAgendaID)
             expect(receivedAgendaCount).toBe(2);

@@ -27,6 +27,14 @@ export function buildEdgeDriver(){
     };
 };
 
+export async function GetDriver(browserDriver: string): Promise<WebDriver>{
+    let driver: WebDriver;
+    if(browserDriver !== "MicrosoftEdge")
+        driver = await buildDriver(browserDriver);
+    else
+        driver = await buildEdgeDriver();
+    return driver;
+};
 
 export async function closeGDPR(driver: WebDriver, ttl: number){
     await (
