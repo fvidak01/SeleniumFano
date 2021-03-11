@@ -11,8 +11,8 @@ export function buildDriver(browser: string){
     catch(e){
         console.log(e);
         return null;
-    }
-}
+    };
+};
 
 export function buildEdgeDriver(){
     try{
@@ -24,8 +24,29 @@ export function buildEdgeDriver(){
     catch(e){
         console.log(e);
         return null;
-    }
-}
+    };
+};
+
+export async function GetDriver(browserDriver: string): Promise<WebDriver>{
+    let driver: WebDriver;
+    if(browserDriver !== "MicrosoftEdge")
+        driver = await buildDriver(browserDriver);
+    else
+        driver = await buildEdgeDriver();
+    return driver;
+};
+
+export async function closeGDPR(driver: WebDriver, ttl: number){
+    await (
+        await driver.wait(until.elementLocated(By.id("finansavisen-gdpr-disclamer-close")), ttl)
+    ).click()
+    .catch(()=>{
+        console.log("Failed to close GDPR notice.");
+        return undefined;
+    });
+    return null;
+};
+
 
 // Go to old tab
 export async function Next(driver: WebDriver, mainTab: string, browserDriver: string){
@@ -50,18 +71,6 @@ async function FirefoxFix(driver: WebDriver, browserDriver: string = "firefox"){
             await driver.switchTo().window(tabs[0]);
         };
     // };
-};
-
-
-export async function closeGDPR(driver: WebDriver, ttl: number){
-    await (
-        await driver.wait(until.elementLocated(By.id("finansavisen-gdpr-disclamer-close")), ttl)
-    ).click()
-    .catch(()=>{
-        console.log("Failed to close GDPR notice.")
-        return null;
-    });
-    return null;
 };
 
 

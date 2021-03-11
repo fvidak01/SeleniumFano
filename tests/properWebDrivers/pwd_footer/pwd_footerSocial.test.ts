@@ -7,8 +7,6 @@ const rootURL:string = process.env.FOOTER;
 const ttl:number = 15000;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 30;
 
-let driver:WebDriver;
-
 //
 // Testing if social media links in footer are all there
 //
@@ -19,17 +17,18 @@ const browserList:string[] = ["firefox", "MicrosoftEdge", "chrome"];
 
 
 browserList.forEach(browserDriver =>{
-    it("waits for "+browserDriver+" to start", async ()=>{
-        if(browserDriver!="MicrosoftEdge")
-        driver = await buildDriver(browserDriver);
-    else
-        driver = await buildEdgeDriver();
-    });
+    let driver:WebDriver;
 
     describe((browserDriver+" tests").toUpperCase(), ()=>{
         let socialLinks:WebElement[];
         
         it("sets up the testing area", async ()=>{
+            if(browserDriver !== "MicrosoftEdge")
+                driver = await buildDriver(browserDriver);
+            else
+                driver = await buildEdgeDriver();
+            expect(driver).not.toBeNull();
+
             await driver.get(rootURL);
             expect(await closeGDPR(driver, ttl)).toBeNull();
         });
@@ -51,9 +50,9 @@ browserList.forEach(browserDriver =>{
                 expect(await socialLinks[i].getAttribute("href")).toMatch(expectedHrefs[i]);
             }
         });
-    });
     
-    it("stops "+browserDriver, async ()=>{
-        await driver.quit();
+        it("stops "+browserDriver, async ()=>{
+            await driver.quit();
+        });
     });
 });
